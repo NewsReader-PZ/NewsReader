@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    standard news item-->
+    <style name="standard_news_item" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="fontFamily">@font/fanwood_text</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="standard_news_item_title" parent="standard_news_item">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="standard_news_item_author" parent="standard_news_item">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+<!--    article-->
+    <style name="article" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="fontFamily">@font/fanwood_text</item>
+        <item name="paddingStart">8dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="article_photo_description" parent="article">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/light_grey</item>
+    </style>
+    <style name="article_photo_author" parent="article">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/light_grey</item>
+    </style>
+    <style name="article_title" parent="article">
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+    <style name="article_subheading" parent="article">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="article_author" parent="article">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+    <style name="article_text" parent="article">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
