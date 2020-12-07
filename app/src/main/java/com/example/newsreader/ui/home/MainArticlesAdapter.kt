@@ -35,6 +35,5 @@ class MainArticlesAdapter : RecyclerView.Adapter<MainArticlesAdapter.ViewHolder>
         val title : TextView = itemView.findViewById(R.id.standard_news_text_view_title)
         val author : TextView = itemView.findViewById(R.id.standard_news_text_view_author)
         val articleImage : ImageView = itemView.findViewById(R.id.standard_news_image_icon)
-
     }
 }

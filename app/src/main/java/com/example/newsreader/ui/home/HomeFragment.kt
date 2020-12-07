@@ -17,7 +17,6 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //view?.let { Navigation.findNavController(it).navigate(R.id.action_navigation_home_to_welcomeScreen) }p
     }
 
     override fun onCreateView(
@@ -29,16 +28,8 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-       // val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
         val adapter = MainArticlesAdapter()
         return root
-        //view?.let { getToWelcomeScreen(it) }
     }
 
 }
-//fun getToWelcomeScreen(view: View){
-//
-//}
