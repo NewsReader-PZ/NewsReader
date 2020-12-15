@@ -29,6 +29,7 @@
         />
 
     <TextView
+        android:id="@+id/bigger_news_item_subheading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_news_item_default_margin"

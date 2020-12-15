@@ -1,15 +1,21 @@
 package com.example.newsreader
 
 import android.icu.text.CaseMap
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ArticleData(){
-    var title: String = "Tytuł"
-    var publishingDate = ""
-    var updateDate = ""
-    lateinit var imagesDescription :ArrayList<String>
-    lateinit var imagesAuthors :ArrayList<String>
-    var author:String = "Autor"
-    var text:String = "texttexttext"
-    lateinit var images:ArrayList<String>
+data class ArticleData(var title: String = "Title",
+                       var publishingDate:Date = Date(),
+                       var updateDate:Date = Date(),
+                       var imagesDescription :ArrayList<String>,
+                       var imagesAuthors :ArrayList<String>,
+                       var author:String = "Author",
+                       var subheading:String,
+                       var text:String = "texttexttext",
+                       var images:ArrayList<String>){
+//    constructor(empa: String) : this(title,publishingDate,updateDate,imagesDescription, imagesAuthors, author, text, images) {
+//
+//    }
+
 
 }
