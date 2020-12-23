@@ -35,7 +35,7 @@
         android:layout_marginStart="@dimen/standard_news_item_default_margin"
         android:layout_marginEnd="@dimen/standard_news_item_default_margin"
         android:layout_below="@id/bigger_news_item_author"
-        android:theme="@style/article_subheading"
+        android:theme="@style/bigger_news_item_subheading"
         android:text="Subheading"
         />
 </RelativeLayout>

@@ -9,6 +9,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.sql.Timestamp
 import java.text.FieldPosition
+import java.util.*
+import kotlin.collections.ArrayList
 
 object Repository {
     private const val TAG:String = "Repository"
@@ -18,11 +20,11 @@ object Repository {
     get() {
         return _articlesArray
     }
-    private var _currentArticle:MutableLiveData<ArticleFullData> = MutableLiveData<ArticleFullData>()
-    val currentArticle:LiveData<ArticleFullData>
-        get() {
-            return _currentArticle
-        }
+//    private var _currentArticle:MutableLiveData<CurrentArticle> = MutableLiveData<CurrentArticle>()
+//    val currentArticle:LiveData<CurrentArticle>
+//        get() {
+//            return _currentArticle
+//        }
     init {
         _articlesArray.value = ArrayList()
         Log.i(TAG,"init")
@@ -43,16 +45,19 @@ object Repository {
                     //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                     //articlesArray = document.toObjects(MyArticlesArray::class.java)
                       //  }
-                        _currentArticle.value = ArticleFullData(
-                            title = document.documents[0].get("title") as String,
-                            publishingDate = document.documents[0].get("publishingDate") as Timestamp,
-                            updateDate = document.documents[0].get("updateDate") as Timestamp,
-                            author = document.documents[0].get("author") as String,
-                           subheading =  document.documents[0].get("subheading") as String,
-                           id =  document.documents[0].id,
-                        imagesAuthors = ArrayList(),
-                        imagesDescription = ArrayList())
-                Log.i(TAG, _currentArticle.value.toString())
+                            CurrentArticle.apply {
+                                _title.value = document.documents[0].get("title") as String
+                                _publishingDate.value = document.documents[0].get("publishingDate") as com.google.firebase.Timestamp
+                                _updateDate.value = document.documents[0].get("updateDate") as com.google.firebase.Timestamp
+                                _author.value = document.documents[0].get("author") as String
+                                _subheading.value =  document.documents[0].get("subheading") as String
+                                id =  document.documents[0].id
+                                _imagesAuthors.value = document.documents[0].get("imageAuthors") as ArrayList<String>
+                                _imagesDescription.value = document.documents[0].get("imageDescriptions") as ArrayList<String>
+                                _text.value = document.documents[0].get("text") as String
+                            }
+
+                Log.i(TAG, CurrentArticle.toString())
                        // _articlesArray.value?.get(i)?.let { Log.i(TAG, it.toString()) }
                 } else {
                     Log.d(TAG, "No such document")
@@ -105,5 +110,57 @@ object Repository {
         //Log.i(TAG,"Returning articlesArray (last element)${articlesArray[articlesArray.size-1].toString()}")
         //Log.i(TAG, "Returning array size: ${articlesArray.size}")
     }
-
+    object CurrentArticle {
+        var _title: MutableLiveData<String> = MutableLiveData("Title")
+        val title: LiveData<String>
+        get() {
+            return _title
+        }
+        var _publishingDate:MutableLiveData<com.google.firebase.Timestamp>  = MutableLiveData(com.google.firebase.Timestamp(Date()))
+        val publishingDate:LiveData<com.google.firebase.Timestamp>
+        get() {
+            return _publishingDate
+        }
+        var _updateDate:MutableLiveData<com.google.firebase.Timestamp> = MutableLiveData (com.google.firebase.Timestamp(Date()))
+        set(value) {
+            field.value = value.value
+        }
+        val updateDate:LiveData<com.google.firebase.Timestamp>
+        get() {
+            return _updateDate
+        }
+        var _imagesDescription :MutableLiveData<ArrayList<String>> = MutableLiveData()
+        val imagesDescription:LiveData<ArrayList<String>>
+        get() {
+            return _imagesDescription
+        }
+        var _imagesAuthors :MutableLiveData<ArrayList<String>> = MutableLiveData()
+        val imagesAuthors:LiveData<ArrayList<String>>
+            get() {
+                return _imagesAuthors
+            }
+        var _author:MutableLiveData<String> = MutableLiveData("Author")
+        val author:LiveData<String>
+        get(){
+            return _author
+        }
+        var _subheading:MutableLiveData<String> = MutableLiveData("Subheading")
+        set(value) {
+            field.value = value.value
+        }
+        val subheading:LiveData<String>
+        get() {
+            return _subheading
+        }
+        var _text:MutableLiveData<String> = MutableLiveData("texttexttext")
+        val text:LiveData<String>
+        get() {
+            return _text
+        }
+        lateinit var id:String
+        var images:ArrayList<String> = ArrayList(1)
+        override fun toString(): String {
+            return "{$title;$author;$subheading;$text}"
+        }
+    }
 }

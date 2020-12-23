@@ -3,5 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="standard_news_item_default_margin">8dp</dimen>
-    <dimen name="article_margin">8dp</dimen>
+    <dimen name="article_margin">16dp</dimen>
 </resources>

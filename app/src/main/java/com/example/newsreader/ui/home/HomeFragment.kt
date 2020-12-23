@@ -45,7 +45,7 @@ class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener {
             {
                 Log.i(TAG,"Observer update")
                 (recyclerView.adapter as MainArticlesAdapter).data  = Repository.getArticlesArray()
-                myAdapter.notifyDataSetChanged()})
+                myAdapter.notifyDataSetChanged() })
 //        val binding:HomeFragmentBinding = DataBindingUtil.setContentView(
 //            requireActivity().parent,R.layout.fragment_home
 //        )
@@ -62,7 +62,7 @@ class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener {
         val action = HomeFragmentDirections.actionNavigationHomeToArticle()
         action.articleId = Repository.getClickedArticleId(position).toString()
         Log.i(TAG,"onItemCLick: ${action.articleId}")
-        findNavController().navigate(R.id.article)
+        findNavController().navigate(action)
 
     }
 }

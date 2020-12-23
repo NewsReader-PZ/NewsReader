@@ -6,9 +6,9 @@ import com.example.newsreader.ArticleFullData
 import com.example.newsreader.Repository
 
 class ArticleViewModel(val articleId: String) : ViewModel() {
-        var article: ArticleFullData?
+//        var article: ArticleFullData?
         init {
             Repository.setCurrentArticle(articleId)
-            article = Repository.currentArticle.value
+            //article = Repository.currentArticle.value
         }
 }

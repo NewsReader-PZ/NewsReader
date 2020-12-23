@@ -9,18 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.newsreader.R
+import com.example.newsreader.Repository
+import com.example.newsreader.databinding.ArticleFragmentBinding
 
 class Article : Fragment() {
     private val TAG = "ArticleFragment"
     companion object {
         fun newInstance() = Article()
     }
+    //private var binding:Article = null
     private val args: ArticleArgs by navArgs()
     private lateinit var viewModel: ArticleViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.article_fragment, container, false)
+        val binding:ArticleFragmentBinding = ArticleFragmentBinding.inflate(inflater,container,false)
+        val view = binding.root
+        binding.currentArticle = Repository.CurrentArticle
+        binding.lifecycleOwner = this
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
