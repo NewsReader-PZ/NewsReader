@@ -7,6 +7,8 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.core.FirestoreClient
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.sql.Timestamp
 import java.text.FieldPosition
 import java.util.*
@@ -45,6 +47,8 @@ object Repository {
                     //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                     //articlesArray = document.toObjects(MyArticlesArray::class.java)
                       //  }
+//                    val storageReference:StorageReference = FirebaseStorage.getInstance(articleId).reference
+//                    storageReference.getBytes(2000000).result
                             CurrentArticle.apply {
                                 _title.value = document.documents[0].get("title") as String
                                 _publishingDate.value = document.documents[0].get("publishingDate") as com.google.firebase.Timestamp
@@ -52,6 +56,7 @@ object Repository {
                                 _author.value = document.documents[0].get("author") as String
                                 _subheading.value =  document.documents[0].get("subheading") as String
                                 id =  document.documents[0].id
+                                //images = storageReference.child("0").downloadUrl
                                 _imagesAuthors.value = document.documents[0].get("imageAuthors") as ArrayList<String>
                                 _imagesDescription.value = document.documents[0].get("imageDescriptions") as ArrayList<String>
                                 _text.value = document.documents[0].get("text") as String
@@ -85,6 +90,7 @@ object Repository {
                         val dataSize = document.size()
                         //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                         //articlesArray = document.toObjects(MyArticlesArray::class.java)
+                        val storageReference:StorageReference = FirebaseStorage.getInstance().reference
                         for (i in 0 until dataSize){
                             val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
                             if (arrayContainsId != null) {
@@ -94,7 +100,8 @@ object Repository {
                                 document.documents[i].get("title") as String,
                                 document.documents[i].get("author") as String,
                                 document.documents[i].get("subheading") as String,
-                                document.documents[i].id
+                                document.documents[i].id,
+                                storageReference.child("gs://projektzespolowytest.appspot.com/Articles/${document.documents[i].id}/0.jpg")
                             )
                             _articlesArray.value?.add(articleData)
                             Log.i(TAG, articleData.toString())

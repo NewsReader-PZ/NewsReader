@@ -7,9 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.module.AppGlideModule
 import com.example.newsreader.ArticleData
 import com.example.newsreader.R
 import com.example.newsreader.Repository
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.firebase.storage.StorageReference
+import java.io.InputStream
 
 class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "MainArticlesAdapter"
@@ -41,14 +47,22 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnIte
                 val holder0:ViewHolder0 = holder as ViewHolder0
                 holder0.title.text = item.title
                 holder0.author.text = item.author
-                holder0.articleImage.setImageResource(R.drawable.title_much_smaller)
+                //holder0.articleImage.setImageResource(R.drawable.title_much_smaller)
+                Glide.with(holder0.itemView.context)
+                    .load(item.onlyFirstImage)
+                    //.override(500, 250)
+                    .into(holder0.articleImage);
                 holder0.subheading.text = item.subheading
             }
             else->{
                 val holderE:ViewHolderElse = holder as ViewHolderElse
                 holderE.title.text = item.title
                 holderE.author.text = item.author
-                holderE.articleImage.setImageResource(R.drawable.title_much_smaller)
+                //holderE.articleImage.setImageResource(R.drawable.title_much_smaller)
+                Glide.with(holder.itemView.context)
+                    .load(item.onlyFirstImage)
+                   // .override(150, 100)
+                    .into(holder.articleImage);
                 //holderE.subheading.text = item.subheading
             }
 
