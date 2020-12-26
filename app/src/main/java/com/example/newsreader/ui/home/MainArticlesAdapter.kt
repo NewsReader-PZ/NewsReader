@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.module.AppGlideModule
 import com.example.newsreader.ArticleData
+import com.example.newsreader.GlideApp
 import com.example.newsreader.R
 import com.example.newsreader.Repository
 import com.firebase.ui.storage.images.FirebaseImageLoader
@@ -48,7 +49,8 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListen
                 holder0.title.text = item.title
                 holder0.author.text = item.author
                 //holder0.articleImage.setImageResource(R.drawable.title_much_smaller)
-                Glide.with(holder0.itemView.context)
+                GlideApp.with(holder0.itemView.context)
+                    //.using(FirebaseImageLoader())
                     .load(item.onlyFirstImage)
                     //.override(500, 250)
                     .into(holder0.articleImage);
@@ -59,7 +61,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListen
                 holderE.title.text = item.title
                 holderE.author.text = item.author
                 //holderE.articleImage.setImageResource(R.drawable.title_much_smaller)
-                Glide.with(holder.itemView.context)
+                GlideApp.with(holder.itemView.context)
                     .load(item.onlyFirstImage)
                    // .override(150, 100)
                     .into(holder.articleImage);

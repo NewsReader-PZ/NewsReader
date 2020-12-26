@@ -101,7 +101,7 @@ object Repository {
                                 document.documents[i].get("author") as String,
                                 document.documents[i].get("subheading") as String,
                                 document.documents[i].id,
-                                storageReference.child("gs://projektzespolowytest.appspot.com/Articles/${document.documents[i].id}/0.jpg")
+                                storageReference.child("Articles/${document.documents[i].id}/0.jpg")
                             )
                             _articlesArray.value?.add(articleData)
                             Log.i(TAG, articleData.toString())

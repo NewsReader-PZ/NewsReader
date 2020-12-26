@@ -2,8 +2,16 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <View
+        android:id="@+id/stndard_news_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_marginStart="@dimen/standard_news_item_default_margin"
+        android:layout_marginEnd="@dimen/standard_news_item_default_margin"/>
     <ImageView
         android:id="@+id/standard_news_image_icon"
+
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/standard_news_item_default_margin"
