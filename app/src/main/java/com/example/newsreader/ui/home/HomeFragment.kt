@@ -15,7 +15,7 @@ import com.example.newsreader.R
 import com.example.newsreader.Repository
 
 class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener {
-    val TAG = "HomeFragment"
+    private val TAG = "HomeFragment"
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeViewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -15,7 +15,7 @@
         android:layout_marginEnd="@dimen/standard_news_item_default_margin"
         android:layout_below="@id/bigger_news_item_image_view"
         android:theme="@style/article_title"
-        android:text="Title"
+        android:text="@string/title"
         />
     <TextView
         android:id="@+id/bigger_news_item_author"
@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/standard_news_item_default_margin"
         android:layout_below="@id/bigger_news_item_title"
         android:theme="@style/article_author"
-        android:text="Author"
+        android:text="@string/author"
         />
 
     <TextView
@@ -36,6 +36,6 @@
         android:layout_marginEnd="@dimen/standard_news_item_default_margin"
         android:layout_below="@id/bigger_news_item_author"
         android:theme="@style/bigger_news_item_subheading"
-        android:text="Subheading"
+        android:text="@string/subheading"
         />
 </RelativeLayout>

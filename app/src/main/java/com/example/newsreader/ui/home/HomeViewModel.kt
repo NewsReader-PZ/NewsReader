@@ -10,7 +10,6 @@ import com.example.newsreader.ui.article.Article
 
 class HomeViewModel : ViewModel() {
     var data:ArrayList<ArticleData> = ArrayList()
-        init{}
     //var data:ArrayList<ArticleData>  = Repository.getArticlesForHomeView()
 //    var articlesList:MutableLiveData<Array<ArticleData>> = MutableLiveData()
 //    val _articlesList :LiveData<Array<ArticleData>>

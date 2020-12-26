@@ -17,7 +17,7 @@ import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 
-class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListener: OnItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "MainArticlesAdapter"
     var data: ArrayList<ArticleData> = ArrayList()
         set(value){
@@ -39,7 +39,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnIte
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int):Unit {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = data[position]
         val res = holder.itemView.context.resources
         when(position){
@@ -80,7 +80,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnIte
         return data.size
     }
 
-    class ViewHolder0(itemView: View, val onItemListener: OnItemListener):RecyclerView.ViewHolder(itemView), View.OnClickListener{
+    class ViewHolder0(itemView: View, private val onItemListener: OnItemListener):RecyclerView.ViewHolder(itemView), View.OnClickListener{
         init {
             itemView.setOnClickListener (this)
         }
@@ -92,7 +92,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel,val onItemListener: OnIte
             onItemListener.onItemCLick(adapterPosition)
         }
     }
-    class ViewHolderElse(itemView: View, val onItemListener: OnItemListener):RecyclerView.ViewHolder(itemView), View.OnClickListener{
+    class ViewHolderElse(itemView: View, private val onItemListener: OnItemListener):RecyclerView.ViewHolder(itemView), View.OnClickListener{
         init {
             itemView.setOnClickListener (this)
         }

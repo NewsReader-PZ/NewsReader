@@ -34,7 +34,7 @@ object Repository {
     fun setCurrentArticle(articleId:String){
         val currentArticle = "Current article"
         //var articlesArray:ArrayList<ArticleData> = ArrayList()
-        Log.i(TAG,"$currentArticle articleId ${articleId}")
+        Log.i(TAG,"$currentArticle articleId $articleId")
         Log.i(TAG,"$currentArticle FieldPath id ${FieldPath.documentId()}")
         val docRef = db.collection("Articles")
             .whereEqualTo(FieldPath.documentId(),articleId)
@@ -131,6 +131,7 @@ object Repository {
         var _updateDate:MutableLiveData<com.google.firebase.Timestamp> = MutableLiveData (com.google.firebase.Timestamp(Date()))
         set(value) {
             field.value = value.value
+            field = value
         }
         val updateDate:LiveData<com.google.firebase.Timestamp>
         get() {
@@ -154,6 +155,7 @@ object Repository {
         var _subheading:MutableLiveData<String> = MutableLiveData("Subheading")
         set(value) {
             field.value = value.value
+            field = value
         }
         val subheading:LiveData<String>
         get() {

@@ -8,7 +8,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/standard_news_item_default_margin"
         android:layout_marginBottom="@dimen/standard_news_item_default_margin"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
+        android:layout_marginStart="@dimen/standard_news_item_default_margin"
         />
 
     <TextView
@@ -16,18 +16,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_news_item_default_margin"
-        android:layout_toRightOf="@id/standard_news_image_icon"
+        android:layout_toEndOf="@id/standard_news_image_icon"
         android:theme="@style/standard_news_item_title"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
-        android:text="Title" />
+        android:layout_marginStart="@dimen/standard_news_item_default_margin"
+        android:text="@string/title" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
+        android:layout_marginStart="@dimen/standard_news_item_default_margin"
         android:id="@+id/standard_news_text_view_author"
         android:layout_below="@+id/standard_news_text_view_title"
-        android:layout_toRightOf="@+id/standard_news_image_icon"
+        android:layout_toEndOf="@+id/standard_news_image_icon"
         android:theme="@style/standard_news_item_author"
-        android:text="Author"
+        android:text="@string/author"
         />
 </RelativeLayout>
