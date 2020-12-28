@@ -18,6 +18,7 @@ object Repository {
     private const val TAG:String = "Repository"
     private val db = Firebase.firestore
     private var _articlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
+    val storageReference:StorageReference = FirebaseStorage.getInstance().reference
     val articlesArray:LiveData<ArrayList<ArticleData>>
     get() {
         return _articlesArray
@@ -50,13 +51,20 @@ object Repository {
 //                    val storageReference:StorageReference = FirebaseStorage.getInstance(articleId).reference
 //                    storageReference.getBytes(2000000).result
                             CurrentArticle.apply {
+                                _author.value = document.documents[0].get("author") as String
                                 _title.value = document.documents[0].get("title") as String
                                 _publishingDate.value = document.documents[0].get("publishingDate") as com.google.firebase.Timestamp
                                 _updateDate.value = document.documents[0].get("updateDate") as com.google.firebase.Timestamp
-                                _author.value = document.documents[0].get("author") as String
+
                                 _subheading.value =  document.documents[0].get("subheading") as String
                                 id =  document.documents[0].id
-                                //images = storageReference.child("0").downloadUrl
+                                _images.value?.add(storageReference.child("Articles/${document.documents[0].id}/0.jpg"))
+                                var i = 0
+//                                while(storageReference.child("Articles/${document.documents[i].id}/$i.jpg")){
+//                                    _images.value?.add(storageReference.child("Articles/${document.documents[i].id}/$i.jpg"))
+//                                    i++
+//                                }
+                                _authorImage.value = storageReference.child("Authors/${author.value.toString().toLowerCase()}.jpg")
                                 _imagesAuthors.value = document.documents[0].get("imageAuthors") as ArrayList<String>
                                 _imagesDescription.value = document.documents[0].get("imageDescriptions") as ArrayList<String>
                                 _text.value = document.documents[0].get("text") as String
@@ -90,7 +98,6 @@ object Repository {
                         val dataSize = document.size()
                         //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                         //articlesArray = document.toObjects(MyArticlesArray::class.java)
-                        val storageReference:StorageReference = FirebaseStorage.getInstance().reference
                         for (i in 0 until dataSize){
                             val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
                             if (arrayContainsId != null) {
@@ -152,6 +159,11 @@ object Repository {
         get(){
             return _author
         }
+        var _authorImage:MutableLiveData<StorageReference> = MutableLiveData()
+        val authorImage:LiveData<StorageReference>
+            get(){
+                return _authorImage
+            }
         var _subheading:MutableLiveData<String> = MutableLiveData("Subheading")
         set(value) {
             field.value = value.value
@@ -167,7 +179,11 @@ object Repository {
             return _text
         }
         lateinit var id:String
-        var images:ArrayList<String> = ArrayList(1)
+        var _images:MutableLiveData<ArrayList<StorageReference>> = MutableLiveData(ArrayList(1))
+        val images:LiveData<ArrayList<StorageReference>>
+        get() {
+            return _images
+        }
         override fun toString(): String {
             return "{$title;$author;$subheading;$text}"
         }

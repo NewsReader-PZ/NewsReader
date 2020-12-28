@@ -1,6 +1,7 @@
 package com.example.newsreader
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
                //findViewById<Toolbar>(R.id.main_toolbar)
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+    }
+
+    fun onGalleryClick(view: View){
 
     }
     }

@@ -53,7 +53,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListen
                     //.using(FirebaseImageLoader())
                     .load(item.onlyFirstImage)
                     //.override(500, 250)
-                    .into(holder0.articleImage);
+                    .into(holder0.articleImage)
                 holder0.subheading.text = item.subheading
             }
             else->{
@@ -64,7 +64,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListen
                 GlideApp.with(holder.itemView.context)
                     .load(item.onlyFirstImage)
                    // .override(150, 100)
-                    .into(holder.articleImage);
+                    .into(holder.articleImage)
                 //holderE.subheading.text = item.subheading
             }
 
@@ -106,6 +106,11 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val onItemListen
         }
 
     }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+    }
+
     public interface OnItemListener{
         fun onItemCLick(position: Int)
     }
