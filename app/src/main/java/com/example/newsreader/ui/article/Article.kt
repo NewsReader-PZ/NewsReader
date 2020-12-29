@@ -26,7 +26,7 @@ class Article : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding:ArticleFragmentBinding = ArticleFragmentBinding.inflate(inflater,container,false)
-        viewModel = ViewModelProvider(this,ArticleViewModelFactory(args.articleId)).get(ArticleViewModel::class.java)
+        viewModel = ViewModelProvider(this,ArticleViewModelFactory(args.articleId, application = requireActivity().application)).get(ArticleViewModel::class.java)
         val view = binding.root
         binding.currentArticle = Repository.CurrentArticle
         binding.articleViewModel= viewModel
@@ -38,11 +38,6 @@ class Article : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Log.i(TAG, "Got articleId: ${args.articleId}")
 
-        //val imageButton:ImageButton = view.findViewById(R.id.article_gallery)
-//        GlideApp.with(this)
-//                .load(Repository.CurrentArticle.images.value?.get(0))
-//                // .override(150, 100)
-//                .into(imageButton)
         // TODO: Use the ViewModel
     }
 

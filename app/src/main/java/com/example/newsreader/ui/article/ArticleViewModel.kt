@@ -5,10 +5,7 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bumptech.glide.Glide
 import com.example.newsreader.GlideApp
 import com.example.newsreader.Repository
@@ -16,11 +13,10 @@ import com.google.firebase.storage.StorageReference
 import java.lang.IndexOutOfBoundsException
 import kotlin.coroutines.coroutineContext
 
-class ArticleViewModel(private val articleId: String) : ViewModel() {
+class ArticleViewModel(private val articleId: String, application: Application) : AndroidViewModel(application){
 
         init {
             Repository.setCurrentArticle(articleId)
-
         }
     val _firstStorageReference:MutableLiveData<StorageReference> = MutableLiveData(Repository.storageReference.child("Articles/${articleId}/0.jpg"))
     val firstStorageReference: LiveData<StorageReference>
@@ -35,12 +31,7 @@ class ArticleViewModel(private val articleId: String) : ViewModel() {
         @JvmStatic
         @BindingAdapter("storageReference")
         fun loadImage(view: ImageView, storageReference: StorageReference?) { // This methods should not have any return type, = declaration would make it return that object declaration.
-            //try{
                 GlideApp.with(view.context).load(storageReference).into(view)
-            //}
-           // catch (e:IndexOutOfBoundsException){
-            //    Log.i(TAG, "Glide fail")
-          //  }
         }
 
     }

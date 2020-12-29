@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.MotionEventCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,15 +18,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newsreader.R
 import com.example.newsreader.Repository
+import java.util.*
+import kotlin.collections.ArrayList
 
-class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener, SwipeRefreshLayout.OnRefreshListener {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
     private val TAG = "HomeFragment"
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeViewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Repository.setArticlesForHomeView()
+        homeViewModel =
+                ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -34,8 +39,7 @@ class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener, SwipeRefres
             savedInstanceState: Bundle?
     ): View? {
 
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+
         val view: View = inflater.inflate(R.layout.fragment_home,container,false)
         recyclerView = view.findViewById(R.id.mainArticlesList)
         recyclerView.setHasFixedSize(false)
@@ -43,19 +47,20 @@ class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener, SwipeRefres
         val llm:LinearLayoutManager = LinearLayoutManager(view.context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = llm
-        Repository.setArticlesForHomeView()
-        val myAdapter = MainArticlesAdapter(homeViewModel, this)
+
+        val myAdapter = MainArticlesAdapter(homeViewModel, MainArticlesAdapter.MainArticlesListener {articleId->
+            val action = HomeFragmentDirections.actionNavigationHomeToArticle()
+            action.articleId = articleId
+           // Log.i(TAG,"onItemCLick: ${action.articleId}")
+            findNavController().navigate(action)
+        })
+        myAdapter.headersArrayList.add(getString(R.string.europe))
+        myAdapter.headersArrayList.add(getString(R.string.opinion))
         recyclerView.adapter = myAdapter
-        Repository.articlesArray.observe( viewLifecycleOwner,
-            {
-                Log.i(TAG,"Observer update, Data size: ${Repository.articlesArray.value?.size}")
-                (recyclerView.adapter as MainArticlesAdapter).data  = it
-                myAdapter.notifyDataSetChanged() })
+        lifecycle.addObserver(homeViewModel)
+
         swipeRefreshLayout.setOnRefreshListener {
             Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
-
-            // This method performs the actual data-refresh operation.
-            // The method calls setRefreshing(false) when it's finished.
             onRefresh()
         }
 //        val binding:HomeFragmentBinding = DataBindingUtil.setContentView(
@@ -66,13 +71,23 @@ class HomeFragment : Fragment(), MainArticlesAdapter.OnItemListener, SwipeRefres
         return view
     }
 
-    override fun onItemCLick(position: Int) {
-        val action = HomeFragmentDirections.actionNavigationHomeToArticle()
-        action.articleId = Repository.getClickedArticleId(position).toString()
-        Log.i(TAG,"onItemCLick: ${action.articleId}")
-        findNavController().navigate(action)
-
+    override fun onStart() {
+        super.onStart()
+        Repository.setArticlesForHomeView()
     }
+
+    override fun onResume() {
+        super.onResume()
+        Repository.setArticlesForHomeView()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        homeViewModel.articlesArray.observe( viewLifecycleOwner, androidx.lifecycle.Observer {
+            Log.i(TAG,"Observer update, Data size: ${homeViewModel.articlesArray.value?.size}")
+            Log.i(TAG,"Observer update, Data size: ${it.size}")
+            (recyclerView.adapter as MainArticlesAdapter).data  = it })
+        }
 
     override fun onRefresh() {
         Repository.setArticlesForHomeView()

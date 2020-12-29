@@ -11,4 +11,8 @@
     <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="subheading">Subheading</string>
+    <string name="publishingDate">Published: </string>
+    <string name="updateDate">Updated</string>
+    <string name="opinion">Opinion</string>
+    <string name="europe">Europe</string>
 </resources>
