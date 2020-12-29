@@ -42,9 +42,9 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.newsreader.ui.notifications.NotificationsFragment"
+        android:name="com.example.newsreader.ui.Sections.SectionsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_sections" >
         <action
             android:id="@+id/action_navigation_notifications_to_navigation_home"
             app:destination="@id/navigation_home" />

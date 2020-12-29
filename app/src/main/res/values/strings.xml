@@ -15,4 +15,13 @@
     <string name="updateDate">Updated</string>
     <string name="opinion">Opinion</string>
     <string name="europe">Europe</string>
+    <string name="poland">Poland</string>
+    <string name="world">World</string>
+    <string name="politics">Politics</string>
+    <string name="business">Business</string>
+    <string name="health">Health</string>
+    <string name="sports">Sports</string>
+    <string name="technology">Technology</string>
+    <string name="automobiles">Automobiles</string>
+    <string name="sections">Sections</string>
 </resources>

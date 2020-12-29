@@ -38,7 +38,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType){
-//            0 -> ViewHolder0(LayoutInflater.from(parent.context)
+//            0 -> ViewHolder(LayoutInflater.from(parent.context)
 //                    .inflate(R.layout.bigger_news_item_view, parent, false),
 //                 onItemListener
 //            )

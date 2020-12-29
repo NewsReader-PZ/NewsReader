@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:id="@+id/categories_standard_item_image_view"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingLeft="@dimen/standard_news_item_default_margin"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/categories_standard_item_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/standard_news_item_default_margin"
+            android:text="Poland"
+            android:theme="@style/article_subheading"
+            app:layout_constraintStart_toEndOf="@+id/categories_standard_item_image_view"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
