@@ -1,25 +1,21 @@
-package com.example.newsreader.ui.Sections
+package com.example.newsreader.ui.sections
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 import com.example.newsreader.R
-import com.example.newsreader.databinding.CategoriesStandardItemBinding
-import com.example.newsreader.ui.home.HomeFragmentDirections
-import com.example.newsreader.ui.home.MainArticlesAdapter
+
 
 class SectionsFragment : Fragment() {
-
+    val TAG:String = "SectionsFragment"
     private lateinit var sectionsViewModel: SectionsViewModel
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
@@ -29,15 +25,15 @@ class SectionsFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_sections,container,false)
         recyclerView = view.findViewById(R.id.sectionsList)
-        recyclerView.setHasFixedSize(false)
+        recyclerView.setHasFixedSize(true)
         val llm: LinearLayoutManager = LinearLayoutManager(view.context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = llm
 
-        val myAdapter = SectionsAdapter( SectionsAdapter.SectionsListener { articleId->
-            val action = HomeFragmentDirections.actionNavigationHomeToArticle()
-            action.articleId = articleId
-            // Log.i(TAG,"onItemCLick: ${action.articleId}")
+        val myAdapter = SectionsAdapter( SectionsAdapter.SectionsListener { sectionName->
+            Log.i(TAG,"onItemCLick: $sectionName")
+            val action = SectionsFragmentDirections.actionNavigationSectionsToChosenSectionFragment()
+            action.chosenCategory = sectionName
             findNavController().navigate(action)
         })
         myAdapter.data.add(SectionData(getString(R.string.poland), R.drawable.poland))

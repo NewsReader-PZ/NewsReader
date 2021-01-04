@@ -1,4 +1,4 @@
-package com.example.newsreader.ui.Sections
+package com.example.newsreader.ui.sections
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -51,7 +51,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
         val myAdapter = MainArticlesAdapter(homeViewModel, MainArticlesAdapter.MainArticlesListener {articleId->
             val action = HomeFragmentDirections.actionNavigationHomeToArticle()
             action.articleId = articleId
-           // Log.i(TAG,"onItemCLick: ${action.articleId}")
+            Log.i(TAG,"onItemCLick: ${action.articleId}")
             findNavController().navigate(action)
         })
         myAdapter.headersArrayList.add(getString(R.string.europe))
@@ -69,16 +69,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
         //val root = inflater.inflate(R.layout.fragment_home, container, false)
         //val adapter = MainArticlesAdapter()
         return view
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Repository.setArticlesForHomeView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Repository.setArticlesForHomeView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

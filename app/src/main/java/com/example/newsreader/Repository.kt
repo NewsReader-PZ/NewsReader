@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.core.FirestoreClient
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -15,25 +16,27 @@ import java.sql.Timestamp
 import java.text.FieldPosition
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAmount
 import java.util.*
 import kotlin.collections.ArrayList
 
 object Repository:LifecycleObserver {
     private const val TAG:String = "Repository"
     private val db = Firebase.firestore
-    var _articlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
     val storageReference:StorageReference = FirebaseStorage.getInstance().reference
+    private var _articlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
     val articlesArray:LiveData<ArrayList<ArticleData>>
-    get() {
-        return _articlesArray
-    }
-//    private var _currentArticle:MutableLiveData<CurrentArticle> = MutableLiveData<CurrentArticle>()
-//    val currentArticle:LiveData<CurrentArticle>
-//        get() {
-//            return _currentArticle
-//        }
+        get() {
+            return _articlesArray
+        }
+    private var _chosenArticlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
+    val chosenArticlesArray:LiveData<ArrayList<ArticleData>>
+        get() {
+            return _chosenArticlesArray
+        }
     init {
         _articlesArray.value = ArrayList()
+        _chosenArticlesArray.value = ArrayList()
         Log.i(TAG,"init")
     }
     fun setCurrentArticle(articleId:String){
@@ -41,14 +44,14 @@ object Repository:LifecycleObserver {
         //var articlesArray:ArrayList<ArticleData> = ArrayList()
         Log.i(TAG,"$currentArticle articleId $articleId")
         Log.i(TAG,"$currentArticle FieldPath id ${FieldPath.documentId()}")
-        val docRef = db.collection("Articles")
+        db.collection("Articles")
             .whereEqualTo(FieldPath.documentId(),articleId)
             .get()
             .addOnSuccessListener {  document ->
                 if (document != null) {
 
                     Log.d(TAG, "$currentArticle documentSnapshot data size: ${document.documents.size}")
-                    val dataSize = document.size()
+                    //val dataSize = document.size()
                     //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                     //articlesArray = document.toObjects(MyArticlesArray::class.java)
                       //  }
@@ -62,7 +65,7 @@ object Repository:LifecycleObserver {
                                 _subheading.value =  document.documents[0].get("subheading") as String
                                 id =  document.documents[0].id
                                 _images.value?.add(storageReference.child("Articles/${document.documents[0].id}/0.jpg"))
-                                var i = 0
+                                //var i = 0
 //                                while(storageReference.child("Articles/${document.documents[i].id}/$i.jpg")){
 //                                    _images.value?.add(storageReference.child("Articles/${document.documents[i].id}/$i.jpg"))
 //                                    i++
@@ -83,25 +86,26 @@ object Repository:LifecycleObserver {
                 Log.d(TAG, "get failed with ", exception)
             }
     }
-    fun getClickedArticleId(position: Int): String?{
-        Log.i(TAG, "getClickedArticleId: ${_articlesArray.value?.get(position)?.id}")
-       return _articlesArray.value?.get(position)?.id
-    }
-    fun getArticlesArray():ArrayList<ArticleData>{
-        return if(_articlesArray.value != null) _articlesArray.value!!
-        else ArrayList<ArticleData>()
-    }
+//    fun getClickedArticleId(position: Int): String?{
+//        Log.i(TAG, "getClickedArticleId: ${_articlesArray.value?.get(position)?.id}")
+//       return _articlesArray.value?.get(position)?.id
+//    }
+//    fun getArticlesArray():ArrayList<ArticleData>{
+//        return if(_articlesArray.value != null) _articlesArray.value!!
+//        else ArrayList<ArticleData>()
+//    }
     fun setArticlesForHomeView(){
         //var articlesArray:ArrayList<ArticleData> = ArrayList()
-        val docRef = db.collection("Articles")
+        db.collection("Articles")
+            .orderBy("publishingDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {  document ->
                     if (document != null) {
                         Log.d(TAG, "DocumentSnapshot data size: ${document.documents.size}")
-                        val dataSize = document.size()
+                        //val dataSize = document.size()
                         //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                         //articlesArray = document.toObjects(MyArticlesArray::class.java)
-                        for (i in 0 until dataSize){
+                        for (i in 0 until 5){
                             val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
                             if (arrayContainsId != null) {
                                 if(arrayContainsId.isNotEmpty()) continue
@@ -115,8 +119,11 @@ object Repository:LifecycleObserver {
                             )
                             _articlesArray.value?.add(articleData)
                             Log.i(TAG, articleData.toString())
-                            _articlesArray.value?.get(i)?.let { Log.i(TAG, it.toString()) }
+                            _articlesArray.value?.get(i)?.let { Log.i(TAG, "From articlesArray $it") }
                         }
+                        setArticlesForChosenSectionForHomeView("europe",2)
+                        setArticlesForChosenSectionForHomeView("opinion",3)
+                        _articlesArray.value = _articlesArray.value
                     } else {
                         Log.d(TAG, "No such document")
                     }
@@ -126,6 +133,89 @@ object Repository:LifecycleObserver {
                 }
         //Log.i(TAG,"Returning articlesArray (last element)${articlesArray[articlesArray.size-1].toString()}")
         //Log.i(TAG, "Returning array size: ${articlesArray.size}")
+    }
+    fun setArticlesForChosenSection(category:String, amount: Int){
+        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        db.collection("Articles")
+                .whereEqualTo("category",category)
+                .orderBy("publishingDate",Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener  {  document ->
+                    if (document != null) {
+                        Log.d(TAG, "DocumentSnapshot data size: ${document.documents.size}")
+                        val dataSize = document.size()
+                        val numberOfArticles = when{
+                            dataSize < amount -> dataSize
+                            else -> amount
+                        }
+                        _chosenArticlesArray.value?.clear()
+                        for (i in 0 until numberOfArticles){
+                            val arrayContainsId = _chosenArticlesArray.value?.filter { it.id ==  document.documents[i].id}
+                            if (arrayContainsId != null) {
+                                if(arrayContainsId.isNotEmpty()) continue
+                            }
+                            val articleData = ArticleData(
+                                    document.documents[i].get("title") as String,
+                                    document.documents[i].get("author") as String,
+                                    document.documents[i].get("subheading") as String,
+                                    document.documents[i].id,
+                                    storageReference.child("Articles/${document.documents[i].id}/0.jpg")
+                            )
+                            _chosenArticlesArray.value?.add(articleData)
+                            Log.i(TAG, articleData.toString())
+                            _chosenArticlesArray.value?.get(i)?.let { Log.i(TAG, "From chosenArticlesArray $it") }
+                        }
+                        _chosenArticlesArray.value = _chosenArticlesArray.value
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+        //Log.i(TAG,"Returning articlesArray (last element)${articlesArray[articlesArray.size-1].toString()}")
+        //Log.i(TAG, "Returning chosen articleArray size: ${_chosenArticlesArray.value?.size}")
+    }
+    private fun setArticlesForChosenSectionForHomeView(category:String, amount: Int){
+        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        db.collection("Articles")
+            .whereEqualTo("category",category)
+            .orderBy("updateDate",Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener  {  document ->
+                if (document != null) {
+                    Log.d(TAG, "DocumentSnapshot data size: ${document.documents.size}")
+                    val dataSize = document.size()
+                    val numberOfArticles = when{
+                        dataSize < amount -> dataSize
+                        else -> amount
+                    }
+                    for (i in 0 until numberOfArticles){
+                        val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
+                        if (arrayContainsId != null) {
+                            if(arrayContainsId.isNotEmpty()) continue
+                        }
+                        val articleData = ArticleData(
+                            document.documents[i].get("title") as String,
+                            document.documents[i].get("author") as String,
+                            document.documents[i].get("subheading") as String,
+                            document.documents[i].id,
+                            storageReference.child("Articles/${document.documents[i].id}/0.jpg")
+                        )
+                        _articlesArray.value?.add(articleData)
+                        Log.i(TAG, articleData.toString())
+                        _articlesArray.value?.get(i)?.let { Log.i(TAG, "From chosenArticlesArray $it") }
+                    }
+                    _articlesArray.value = _articlesArray.value
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+        //Log.i(TAG,"Returning articlesArray (last element)${articlesArray[articlesArray.size-1].toString()}")
+        //Log.i(TAG, "Returning chosen articleArray size: ${_chosenArticlesArray.value?.size}")
     }
     object CurrentArticle {
         private val stf:SimpleDateFormat = SimpleDateFormat("dd MMMM yyyy | HH:mm")

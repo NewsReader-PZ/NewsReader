@@ -9,7 +9,7 @@ import com.example.newsreader.ui.article.Article
 class HomeViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
     val articlesArray:LiveData<ArrayList<ArticleData>>
     get() {
-        return Repository._articlesArray
+        return Repository.articlesArray
     }
     //var data:ArrayList<ArticleData>  = Repository.getArticlesForHomeView()
 //    var articlesList:MutableLiveData<Array<ArticleData>> = MutableLiveData()
@@ -17,8 +17,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application), L
 //        get(){
 //            return articlesList.value
 //        }
-    init {
-    }
+
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

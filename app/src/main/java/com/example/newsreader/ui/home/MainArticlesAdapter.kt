@@ -1,9 +1,7 @@
 package com.example.newsreader.ui.home
 
-import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.lifecycle.LifecycleObserver
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsreader.ArticleData
 import com.example.newsreader.GlideApp
-import com.example.newsreader.R
 import com.example.newsreader.Repository
 import com.example.newsreader.databinding.BiggerNewsItemViewBinding
 import com.example.newsreader.databinding.HeaderItemViewBinding
@@ -30,6 +27,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
         set(value){
            val result:DiffUtil.DiffResult = DiffUtil.calculateDiff(MyDiffCallback(this.data,value))
             field = value
+            notifyDataSetChanged()
             result.dispatchUpdatesTo(this)
         }
     init {
@@ -49,9 +47,11 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item  = if(position < 3) data[position]
-        else if (position in 4..5) data[position-1]
-        else  data[position-2]
+        val item  = when {
+            position < 3 -> data[position]
+            position in 4..5 -> data[position-1]
+            else -> data[position-2]
+        }
 
         val res = holder.itemView.context.resources
         when(position){
@@ -68,11 +68,11 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
                     .into(holder0.binding.biggerNewsItemImageView)
                 holder0.binding.biggerNewsItemSubheading.text = item.subheading
             }
-            3-> {
+            5-> {
                 val holderHeader:ViewHolderHeader = holder as ViewHolderHeader
                 holderHeader.binding.headerText.text = headersArrayList[0]
             }
-            6-> {
+            8-> {
             val holderHeader:ViewHolderHeader = holder as ViewHolderHeader
             holderHeader.binding.headerText.text = headersArrayList[1]
         }
@@ -98,7 +98,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
     override fun getItemViewType(position: Int): Int {
         return  when(position){
              0 -> ITEM_VIEW_TYPE_BIGGER_NEWS
-            3,6 -> ITEM_VIEW_TYPE_HEADER
+            5,8 -> ITEM_VIEW_TYPE_HEADER
             else -> ITEM_VIEW_TYPE_STANDARD_NEWS
         }
         //return super.getItemViewType(position)
@@ -106,8 +106,8 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
 
     override fun getItemCount(): Int {
         Log.i(TAG, "Data size: ${data.size}")
-        return if(data.size < 3) data.size
-        else if(data.size >3 && data.size< 6) data.size +1
+        return if(data.size < 5) data.size
+        else if(data.size in 6..7) data.size +1
         else data.size+2
     }
 
@@ -130,7 +130,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
 
     }
 
-    class MyDiffCallback(val oldArticleList:ArrayList<ArticleData>, val newArticleList:ArrayList<ArticleData>): DiffUtil.Callback(){
+    class MyDiffCallback(private val oldArticleList:ArrayList<ArticleData>, private val newArticleList:ArrayList<ArticleData>): DiffUtil.Callback(){
 
         override fun getOldListSize(): Int {
            return oldArticleList.size
