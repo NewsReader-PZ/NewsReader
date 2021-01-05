@@ -1,9 +1,11 @@
 package com.example.newsreader
 
+import android.provider.MediaStore
 import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.Query
@@ -60,11 +62,13 @@ object Repository:LifecycleObserver {
                             CurrentArticle.apply {
                                 _author.value = document.documents[0].get("author") as String
                                 _title.value = document.documents[0].get("title") as String
-                                _publishingDate.value = document.documents[0].get("publishingDate") as com.google.firebase.Timestamp
-                                _updateDate.value = document.documents[0].get("updateDate") as com.google.firebase.Timestamp
+                                _publishingDate.postValue(document.documents[0].get("publishingDate") as com.google.firebase.Timestamp)
+                                _publishingDate.value = _publishingDate.value
+
                                 _subheading.value =  document.documents[0].get("subheading") as String
                                 id =  document.documents[0].id
                                 _images.value?.add(storageReference.child("Articles/${document.documents[0].id}/0.jpg"))
+                                _images.value = _images.value
                                 //var i = 0
 //                                while(storageReference.child("Articles/${document.documents[i].id}/$i.jpg")){
 //                                    _images.value?.add(storageReference.child("Articles/${document.documents[i].id}/$i.jpg"))
@@ -74,6 +78,7 @@ object Repository:LifecycleObserver {
                                 _imagesAuthors.value = document.documents[0].get("imageAuthors") as ArrayList<String>
                                 _imagesDescription.value = document.documents[0].get("imageDescriptions") as ArrayList<String>
                                 _text.value = document.documents[0].get("text") as String
+                                _updateDate.value = document.documents[0].get("updateDate") as com.google.firebase.Timestamp
                             }
 
                 Log.i(TAG, CurrentArticle.toString())
@@ -105,10 +110,13 @@ object Repository:LifecycleObserver {
                         //val dataSize = document.size()
                         //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
                         //articlesArray = document.toObjects(MyArticlesArray::class.java)
-                        for (i in 0 until 5){
+                        var get = 5
+                        for (i in 0 until get){
                             val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
                             if (arrayContainsId != null) {
-                                if(arrayContainsId.isNotEmpty()) continue
+                                if(arrayContainsId.isNotEmpty()) {
+                                    continue
+                                }
                             }
                             val articleData = ArticleData(
                                 document.documents[i].get("title") as String,
@@ -224,23 +232,10 @@ object Repository:LifecycleObserver {
         get() {
             return _title
         }
-        var _publishingDate:MutableLiveData<com.google.firebase.Timestamp>  = MutableLiveData(com.google.firebase.Timestamp(Date()))
-        val publishingDate:LiveData<String>
-        get() {
-            val date = stf.format(_publishingDate.value?.toDate())
-            return MutableLiveData(date)
-        }
+        var _publishingDate:MutableLiveData<com.google.firebase.Timestamp> = MutableLiveData(com.google.firebase.Timestamp(Date()))
+        val publishingDate:MediatorLiveData<String> = MediatorLiveData();
         var _updateDate:MutableLiveData<com.google.firebase.Timestamp> = MutableLiveData (com.google.firebase.Timestamp(Date()))
-        set(value) {
-            field.value = value.value
-            field = value
-        }
-        val updateDate:LiveData<String>
-        get() {
-            if(_updateDate.value == _publishingDate.value) return MutableLiveData("")
-            val date = stf.format(_updateDate.value?.toDate())
-            return MutableLiveData(date)
-        }
+        val updateDate:MediatorLiveData<String> = MediatorLiveData()
         var _imagesDescription :MutableLiveData<ArrayList<String>> = MutableLiveData()
         val imagesDescription:LiveData<ArrayList<String>>
         get() {
@@ -283,6 +278,25 @@ object Repository:LifecycleObserver {
         }
         override fun toString(): String {
             return "{$title;$author;$subheading;$text}"
+        }
+        init {
+            publishingDate.addSource(_publishingDate) {
+                publishingDate.value = stf.format(it.toDate())
+            }
+            updateDate.addSource(_updateDate){
+                if(it == _publishingDate.value) updateDate.value = ""
+                else updateDate.value = "${stf.format(it.toDate())}"
+            }
+        }
+        fun clearAllFields(){
+            _title.value = ""
+            _authorImage.value
+            _subheading.value = ""
+            _text.value = ""
+            _images = MutableLiveData()
+            _imagesDescription = MutableLiveData()
+            _updateDate.value = com.google.firebase.Timestamp(Date())
+            _publishingDate.value = com.google.firebase.Timestamp(Date())
         }
     }
 }

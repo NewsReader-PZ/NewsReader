@@ -36,4 +36,8 @@ class ArticleViewModel(private val articleId: String, application: Application) 
 
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Repository.CurrentArticle.clearAllFields()
+    }
 }

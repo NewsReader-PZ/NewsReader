@@ -19,4 +19,9 @@ class ChosenSectionViewModel : ViewModel() {
             return false
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        selectedArticleArray.value?.clear()
+    }
 }
