@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/article"
-        android:name="com.example.newsreader.ui.article.Article"
+        android:name="com.example.newsreader.ui.article.ArticleFragment"
         android:label="article_fragment"
         tools:layout="@layout/article_fragment" >
         <argument

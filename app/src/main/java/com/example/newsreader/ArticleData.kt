@@ -1,10 +1,11 @@
 package com.example.newsreader
 
 import android.icu.text.CaseMap
+import androidx.room.Entity
 import com.google.firebase.storage.StorageReference
 import java.util.*
 import kotlin.collections.ArrayList
-
+@Entity
 data class ArticleData(var title: String,
 //                       var publishingDate:Date = Date(),
 //                       var updateDate:Date = Date(),
