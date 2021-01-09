@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/standard_news_image_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="@dimen/standard_news_item_default_margin"
-        android:layout_marginBottom="@dimen/standard_news_item_default_margin"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
-        />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/standard_news_text_view_title"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="article"
+            type="com.example.newsreader.ArticleData" />
+        <variable
+            name="clickListener"
+            type="com.example.newsreader.ui.home.MainArticlesAdapter.MainArticlesListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/standard_news_item_default_margin"
-        android:layout_toRightOf="@id/standard_news_image_icon"
-        android:theme="@style/standard_news_item_title"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
-        android:text="Title" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/standard_news_item_default_margin"
-        android:id="@+id/standard_news_text_view_author"
-        android:layout_below="@+id/standard_news_text_view_title"
-        android:layout_toRightOf="@+id/standard_news_image_icon"
-        android:theme="@style/standard_news_item_author"
-        android:text="Author"
-        />
-</RelativeLayout>
+        android:onClick="@{()->clickListener.onClick(article)}">
+
+        <View
+            android:id="@+id/stndard_news_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginStart="@dimen/standard_news_item_default_margin"
+            android:layout_marginEnd="@dimen/standard_news_item_default_margin" />
+
+        <ImageView
+            android:id="@+id/standard_news_image_icon"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/standard_news_item_default_margin"
+            android:layout_marginBottom="@dimen/standard_news_item_default_margin"
+            android:layout_marginStart="@dimen/standard_news_item_default_margin" />
+
+        <TextView
+            android:id="@+id/standard_news_text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_news_item_default_margin"
+            android:layout_toEndOf="@id/standard_news_image_icon"
+            android:theme="@style/standard_news_item_title"
+            android:layout_marginStart="@dimen/standard_news_item_default_margin"
+            android:text="@string/title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_news_item_default_margin"
+            android:id="@+id/standard_news_text_view_author"
+            android:layout_below="@+id/standard_news_text_view_title"
+            android:layout_toEndOf="@+id/standard_news_image_icon"
+            android:theme="@style/standard_news_item_author"
+            android:text="@string/author" />
+    </RelativeLayout>
+</layout>
