@@ -9,4 +9,11 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_navigation">Navigation</string>
 
+    <!-- comments fragments resources-->
+    <string name="comments_titleComms">comments</string>
+    <string name="leave_commentComms">leave a comment</string>
+    <string name="uploadCommentComms">add comment</string>
+    <string name="comment_textComms">write comment</string>
+
+
 </resources>
