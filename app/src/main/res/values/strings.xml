@@ -9,6 +9,15 @@
     <string name="menu_navigation">Navigation</string>
 //<<<<<<< registerAndLogin
 
+//<<<<<<< comments
+    <!-- comments fragments resources-->
+    <string name="comments_titleComms">comments</string>
+    <string name="leave_commentComms">leave a comment</string>
+    <string name="uploadCommentComms">add comment</string>
+    <string name="comment_textComms">write comment</string>
+
+
+//=======
 
 
     <!-- Login and register  strings -->
@@ -44,5 +53,6 @@
     <string name="automobiles">Automobiles</string>
     <string name="sections">Sections</string>
     <string name="title_sections">Sections</string>
+//>>>>>>> master
 //>>>>>>> master
 </resources>
