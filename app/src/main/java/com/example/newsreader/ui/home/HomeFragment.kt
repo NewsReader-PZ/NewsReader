@@ -31,6 +31,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
         Repository.setArticlesForHomeView()
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
+//        val view:View = View(context)
+//        view.
     }
 
     override fun onCreateView(
