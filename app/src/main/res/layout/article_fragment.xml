@@ -5,6 +5,8 @@
     <data>
         <variable name="currentArticle"
             type="com.example.newsreader.Repository.CurrentArticle"/>
+        <variable name="articleViewModel"
+            type="com.example.newsreader.ui.article.ArticleViewModel"/>
     </data>
 
 <ScrollView
@@ -15,15 +17,17 @@
     android:id="@+id/article_fragment">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
-    <ImageSwitcher
+    <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:id="@+id/article_gallery"/>
+        android:layout_height="270dp"
+        android:onClick="onGalleryClick"
+        android:id="@+id/article_gallery"
+        android:background="@color/white"
+        storageReference="@{articleViewModel.firstStorageReference}"/>
     <TextView
         android:id="@+id/article_photo_description"
-        android:layout_below="@+id/article_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/article_margin"
@@ -32,7 +36,6 @@
         android:text="@{currentArticle.imagesDescription.get(0)}" />
     <TextView
         android:id="@+id/article_photo_author"
-        android:layout_below="@+id/article_photo_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/article_margin"
@@ -41,19 +44,16 @@
         android:text="@{currentArticle.imagesAuthors.get(0)}" />
     <TextView
         android:id="@+id/article_title"
-        android:layout_below="@+id/article_photo_author"
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="@dimen/article_margin"
         android:layout_marginEnd="@dimen/article_margin"
-
         android:layout_height="wrap_content"
         android:theme="@style/article_title"
         android:text="@{currentArticle.title}" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/article_title"
         android:id="@+id/article_author_layout"
         >
         <ImageView
@@ -61,6 +61,8 @@
             android:layout_height="40dp"
             android:layout_marginStart="@dimen/article_margin"
             android:id="@+id/article_author_image"
+            android:scaleType="centerCrop"
+            storageReference="@{currentArticle.authorImage}"
             />
         <TextView
             android:id="@+id/article_author"
@@ -74,17 +76,23 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/article_author_layout"
-        >
+        android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/article_publishment_date"
+            android:id="@+id/article_published"
             android:layout_width="wrap_content"
             android:theme="@style/article_photo_description"
             android:layout_marginStart="@dimen/article_margin"
             android:layout_marginEnd="@dimen/article_margin"
             android:layout_height="wrap_content"
-            android:text="@{currentArticle.publishingDate.toDate().toString()}" />
+            android:text="@string/publishingDate" />
+        <TextView
+            android:id="@+id/article_publishment_date"
+            android:layout_width="match_parent"
+            android:theme="@style/article_photo_description"
+            android:layout_marginEnd="@dimen/article_margin"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/article_published"
+            android:text="@{currentArticle.publishingDate}" />
         <TextView
             android:id="@+id/article_update_date"
             android:layout_width="match_parent"
@@ -92,14 +100,13 @@
             android:layout_marginStart="@dimen/article_margin"
             android:layout_marginEnd="@dimen/article_margin"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/article_publishment_date"
-            android:text="@{currentArticle.updateDate.toDate().toString()}" />
+            android:layout_below="@id/article_publishment_date"
+            android:text="@{currentArticle.updateDate}" />
 
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/article_subheading"
             android:layout_width="match_parent"
@@ -121,9 +128,7 @@
 
     </RelativeLayout>
 
-
 </LinearLayout>
-
 
 </ScrollView>
 </layout>
