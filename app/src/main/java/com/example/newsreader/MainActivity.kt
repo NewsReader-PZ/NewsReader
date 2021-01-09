@@ -1,6 +1,7 @@
 package com.example.newsreader
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,10 +27,14 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 //        val appBarConfiguration = AppBarConfiguration(setOf(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_sections))
                //findViewById<Toolbar>(R.id.main_toolbar)
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+    }
+
+    fun onGalleryClick(view: View){
 
     }
     }
