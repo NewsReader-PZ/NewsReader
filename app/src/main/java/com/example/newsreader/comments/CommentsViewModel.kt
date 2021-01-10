@@ -1,17 +1,9 @@
 package com.example.komentarze
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.archmvvm2.CommentsRepo
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.example.newsreader.ui.CommentData.Comment
 
 class CommentsViewModel() : ViewModel() {
 

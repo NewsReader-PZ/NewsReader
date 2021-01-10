@@ -3,16 +3,10 @@ package com.example.archmvvm2
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.example.komentarze.Comment
+import com.example.newsreader.ui.CommentData.Comment
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.ktx.Firebase
-import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -53,13 +47,15 @@ object CommentsRepo {
                             val userName = document["nick"] as String
                             val text = document["text"] as String
                             val date = document["date"] as Timestamp
-                            var comment = Comment()
-
-                            comment.userName = userName
-                            comment.text = text
+                            val id = document.id
+                            var comment = Comment(date = date.toDate(),
+                            text = text,
+                            id = id,
+                            userUid = userUid,
+                            userName = userName,
+                            articleId = articleUid)
                             //var javaDate = java.util.Date.UTC(date.year,date.month,date.day,date.)
-                            comment.date = date.toDate()
-                            comment.userUid = userUid
+
                             arrayOfComments.add(comment)
                             Log.println(Log.INFO,"comments repo", "fetched comment: $text, date: ${comment.date}")
 
@@ -135,8 +131,6 @@ object CommentsRepo {
         {
             commentAdded.value = false
         }
-
-
     }
     //TODO implement methods to get user uid and user nick in the Repository
     private fun getUserUid() :String

@@ -59,6 +59,17 @@ dependencies {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
+    def room_version = "2.2.6"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
     //kapt "android.arch.lifecycle:compiler:1.1.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
@@ -86,6 +97,7 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.2"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'

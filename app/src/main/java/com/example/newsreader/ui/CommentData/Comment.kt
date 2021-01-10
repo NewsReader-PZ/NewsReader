@@ -1,4 +1,4 @@
-package com.example.newsreader.comments.CommentData
+package com.example.newsreader.ui.CommentData
 
 import androidx.room.ColumnInfo
 import androidx.room.ColumnInfo.TEXT
@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.newsreader.ui.ArticleData.ArticleData
-import com.google.type.Date
+
 @Entity(tableName = "comment", foreignKeys = [ForeignKey(entity=ArticleData::class,
                                                         parentColumns = ["id"],
                                                         childColumns = ["article_id"],

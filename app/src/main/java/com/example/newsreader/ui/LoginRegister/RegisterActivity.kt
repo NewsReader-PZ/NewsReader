@@ -1,4 +1,4 @@
-package com.example.newsreader.LoginRegister
+package com.example.newsreader.ui.LoginRegister
 
 import android.os.Bundle
 import android.view.View

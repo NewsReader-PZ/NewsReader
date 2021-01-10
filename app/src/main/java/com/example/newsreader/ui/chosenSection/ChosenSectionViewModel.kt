@@ -2,10 +2,9 @@ package com.example.newsreader.ui.chosenSection
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsreader.ArticleData
+import com.example.newsreader.ui.ArticleData.ArticleData
 import com.example.newsreader.Repository
 
 class ChosenSectionViewModel : ViewModel() {
