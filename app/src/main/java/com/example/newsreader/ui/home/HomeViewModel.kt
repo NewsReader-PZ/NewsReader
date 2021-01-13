@@ -2,7 +2,7 @@ package com.example.newsreader.ui.home
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.newsreader.ArticleData
+import com.example.newsreader.ui.ArticleData.ArticleData
 import com.example.newsreader.Repository
 
 class HomeViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {

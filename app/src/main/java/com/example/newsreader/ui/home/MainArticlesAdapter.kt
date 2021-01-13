@@ -3,11 +3,10 @@ package com.example.newsreader.ui.home
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsreader.ArticleData
+import com.example.newsreader.ui.ArticleData.ArticleData
 import com.example.newsreader.GlideApp
 import com.example.newsreader.Repository
 import com.example.newsreader.databinding.BiggerNewsItemViewBinding

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="article"
-            type="com.example.newsreader.ArticleData" />
+            type="com.example.newsreader.ui.ArticleData.ArticleData" />
         <variable
             name="clickListener"
             type="com.example.newsreader.ui.home.MainArticlesAdapter.MainArticlesListener" />

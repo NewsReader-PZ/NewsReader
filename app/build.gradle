@@ -54,14 +54,17 @@ dependencies {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
-    implementation "androidx.room:room-runtime:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
+    def room_version = "2.2.6"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.2.6"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // optional - Test helpers
-    testImplementation "androidx.room:room-testing:2.2.6"
+    testImplementation "androidx.room:room-testing:$room_version"
+
     //kapt "android.arch.lifecycle:compiler:1.1.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
@@ -69,14 +72,27 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+//<<<<<<< comments
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
+//=======
+
+
+    //there was a conflict between register and login >>>>>>
+    
+
     //implementation "org.jetbrains.kotlin:kotlin-reflect:1.1.0"
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
     implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
+
+    //and master <<<<<<
+
+//>>>>>>> master
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
 
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.2"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'

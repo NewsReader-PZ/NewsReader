@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsreader.ArticleData
+import com.example.newsreader.ui.ArticleData.ArticleData
 import com.example.newsreader.GlideApp
-import com.example.newsreader.Repository
 import com.example.newsreader.databinding.BiggerChosenCategoryNewsItemViewBinding
-import com.example.newsreader.databinding.BiggerNewsItemViewBinding
 
 class ChosenSectionAdapter(private val clickListener: ChosenSectionListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), LifecycleObserver {
         private val TAG = "ChosenSectionAdapter"

@@ -1,24 +1,18 @@
 package com.example.newsreader
 
-import android.provider.MediaStore
-import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.newsreader.ui.ArticleData.ArticleData
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.core.FirestoreClient
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import java.sql.Timestamp
-import java.text.FieldPosition
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.time.temporal.TemporalAmount
 import java.util.*
 import kotlin.collections.ArrayList
 
