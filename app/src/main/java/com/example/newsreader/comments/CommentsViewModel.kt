@@ -24,9 +24,9 @@ class CommentsViewModel() : ViewModel() {
         articleUID = artUID
         CommentsRepo.getCommentsOfArticle(artUID)
     }
-    fun leaveComment(commentText :String)
+    fun leaveComment(commentText :String, articleId: String)
     {
-        CommentsRepo.leaveComment(commentText)
+        CommentsRepo.leaveComment(commentText, articleId)
     }
 
 

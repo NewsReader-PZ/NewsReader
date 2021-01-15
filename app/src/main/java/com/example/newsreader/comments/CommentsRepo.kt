@@ -110,7 +110,7 @@ object CommentsRepo {
         return "unknown"
     }
 
-    fun leaveComment(commentText :String)  {
+    fun leaveComment(commentText :String, articleUid: String)  {
         try {
 
                 val currentUser = getUserUid()

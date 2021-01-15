@@ -71,7 +71,12 @@
             android:defaultValue="1" />
         <action
             android:id="@+id/action_article_to_commentsFragment"
-            app:destination="@id/commentsFragment" />
+            app:destination="@id/commentsFragment">
+            <argument
+                android:name="articleId"
+                app:argType="string"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/chosenSectionFragment"
@@ -95,12 +100,26 @@
         android:id="@+id/commentsFragment"
         android:name="com.example.komentarze.CommentsFragment"
         android:label="CommentsFragment" >
+        <argument
+            android:name="articleId"
+            app:argType="string"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_commentsFragment_to_leaveCommentFragment"
-            app:destination="@id/leaveCommentFragment" />
+            app:destination="@id/leaveCommentFragment" >
+            <argument
+                android:name="articleId"
+                app:argType="string"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/leaveCommentFragment"
         android:name="com.example.komentarze.LeaveCommentFragment"
-        android:label="LeaveCommentFragment" />
+        android:label="LeaveCommentFragment" >
+        <argument
+            android:name="articleId"
+            app:argType="string"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newsreader.Repository
 import com.example.newsreader.databinding.ArticleFragmentBinding
@@ -16,7 +17,7 @@ class ArticleFragment : Fragment() {
     companion object {
         fun newInstance() = ArticleFragment()
     }
-    private val args: ArticleArgs by navArgs()
+    private val args: ArticleFragmentArgs by navArgs()
     private lateinit var viewModel: ArticleViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +28,11 @@ class ArticleFragment : Fragment() {
         binding.currentArticle = Repository.CurrentArticle
         binding.articleViewModel= viewModel
         binding.lifecycleOwner = this
+        binding.commentsButton.setOnClickListener {
+            val action = ArticleFragmentDirections.actionArticleToCommentsFragment()
+            action.articleId = args.articleId
+            findNavController().navigate(action)
+        }
         return view
     }
 
@@ -36,5 +42,7 @@ class ArticleFragment : Fragment() {
 
         // TODO: Use the ViewModel
     }
+    fun onArticleCommentsButtonClick(view: View){
 
+    }
 }

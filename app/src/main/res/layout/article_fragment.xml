@@ -51,6 +51,14 @@
         android:layout_height="wrap_content"
         android:theme="@style/article_title"
         android:text="@{currentArticle.title}" />
+    <Button
+        android:id="@+id/commentsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comments"
+        android:layout_marginStart="@dimen/article_margin"
+       
+        />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

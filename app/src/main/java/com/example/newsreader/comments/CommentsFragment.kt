@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +36,8 @@ class CommentsFragment : Fragment() {
     private lateinit var commentsViewModel: CommentsViewModel
     private lateinit var commentsRecyclerView: RecyclerView
     private lateinit var commentsList :ArrayList<Comment>
-
+    private lateinit var buttonAddComment:Button
+    private val args:CommentsFragmentArgs by navArgs()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,7 @@ class CommentsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -49,6 +54,7 @@ class CommentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_comments, container, false)
     }
 
@@ -58,7 +64,12 @@ class CommentsFragment : Fragment() {
         commentsList = ArrayList<Comment>()
         commentsViewModel = ViewModelProvider(this).get(CommentsViewModel::class.java)
         prepareRecyclerView()
-
+        buttonAddComment = view.findViewById(R.id.button_add_comment)
+        buttonAddComment.setOnClickListener {
+            val action = CommentsFragmentDirections.actionCommentsFragmentToLeaveCommentFragment()
+            action.articleId = args.articleId
+            findNavController().navigate(action)
+        }
     }
 
     private fun prepareRecyclerView()

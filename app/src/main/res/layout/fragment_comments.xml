@@ -14,7 +14,11 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="@string/comments_titleComms" />
-
+    <Button
+        android:id="@+id/button_add_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add comment"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerViewCommFrag"
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsreader.ui.ArticleData.ArticleData
+import com.example.newsreader.ui.articleData.ArticleSmaller
 import com.example.newsreader.GlideApp
 import com.example.newsreader.Repository
 import com.example.newsreader.databinding.BiggerNewsItemViewBinding
@@ -22,7 +22,7 @@ private const val ITEM_VIEW_TYPE_STANDARD_NEWS = 1
 class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListener: MainArticlesListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), LifecycleObserver {
     private val TAG = "MainArticlesAdapter"
     var headersArrayList:ArrayList<String> = ArrayList()
-    var data: ArrayList<ArticleData> = ArrayList()
+    var data: ArrayList<ArticleSmaller> = ArrayList()
         set(value){
            val result:DiffUtil.DiffResult = DiffUtil.calculateDiff(MyDiffCallback(this.data,value))
             field = value
@@ -46,7 +46,7 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item  = when {
+        val item:ArticleSmaller?  = when {
             position < 3 -> data[position]
             position in 4..5 -> data[position-1]
             else -> data[position-2]
@@ -57,15 +57,15 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
             0->{
                 val holder0:ViewHolder0 = holder as ViewHolder0
                 holder0.binding.article = item
-                holder0.binding.biggerNewsItemTitle.text = item.title
-                holder0.binding.biggerNewsItemAuthor.text = item.author
+                holder0.binding.biggerNewsItemTitle.text = item?.title
+                holder0.binding.biggerNewsItemAuthor.text = item?.author
                 holder0.binding.clickListener = clickListener
                 //holder0.articleImage.setImageResource(R.drawable.title_much_smaller)
                 GlideApp.with(holder0.itemView.context)
-                    .load(item.onlyFirstImage)
+                    .load(item?.onlyFirstImage)
                     //.override(500, 250)
                     .into(holder0.binding.biggerNewsItemImageView)
-                holder0.binding.biggerNewsItemSubheading.text = item.subheading
+                holder0.binding.biggerNewsItemSubheading.text = item?.subheading
             }
             5-> {
                 val holderHeader:ViewHolderHeader = holder as ViewHolderHeader
@@ -79,12 +79,12 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
             else->{
                 val holderE:ViewHolderElse = holder as ViewHolderElse
                 holderE.binding.article = item
-                holderE.binding.standardNewsTextViewTitle.text = item.title
-                holderE.binding.standardNewsTextViewAuthor.text = item.author
+                holderE.binding.standardNewsTextViewTitle.text = item?.title
+                holderE.binding.standardNewsTextViewAuthor.text = item?.author
                 holderE.binding.clickListener = clickListener
                 //holderE.articleImage.setImageResource(R.drawable.title_much_smaller)
                 GlideApp.with(holder.itemView.context)
-                    .load(item.onlyFirstImage)
+                    .load(item?.onlyFirstImage)
                    // .override(150, 100)
                     .into(holderE.binding.standardNewsImageIcon)
                 //holderE.subheading.text = item.subheading
@@ -125,11 +125,11 @@ class MainArticlesAdapter(homeViewModel: HomeViewModel, private val clickListene
         super.onAttachedToRecyclerView(recyclerView)
     }
     class MainArticlesListener(val clickListener: (articleId: String)->Unit){
-        fun onClick(articleData: ArticleData?) = articleData?.id?.let { clickListener(it) }
+        fun onClick(articleSmaller: ArticleSmaller?) = articleSmaller?.id?.let { clickListener(it) }
 
     }
 
-    class MyDiffCallback(private val oldArticleList:ArrayList<ArticleData>, private val newArticleList:ArrayList<ArticleData>): DiffUtil.Callback(){
+    class MyDiffCallback(private val oldArticleList:ArrayList<ArticleSmaller>, private val newArticleList:ArrayList<ArticleSmaller>): DiffUtil.Callback(){
 
         override fun getOldListSize(): Int {
            return oldArticleList.size
