@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
         recyclerView = view.findViewById(R.id.mainArticlesList)
         recyclerView.setHasFixedSize(false)
         swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshInHomeFragment)
-        val llm:LinearLayoutManager = LinearLayoutManager(view.context)
+        val llm = LinearLayoutManager(view.context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = llm
 

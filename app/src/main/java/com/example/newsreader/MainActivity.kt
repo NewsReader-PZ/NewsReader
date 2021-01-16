@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
     }
+    fun onArticleCommentsButtonClick(view:View){
 
+    }
     fun onGalleryClick(view: View){
 
     }

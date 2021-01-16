@@ -2,18 +2,17 @@ package com.example.newsreader.ui.home
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.newsreader.ArticleData
+import com.example.newsreader.ui.articleData.ArticleSmaller
 import com.example.newsreader.Repository
-import com.example.newsreader.ui.article.Article
 
 class HomeViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
-    val articlesArray:LiveData<ArrayList<ArticleData>>
+    val articlesArray:LiveData<ArrayList<ArticleSmaller>>
     get() {
         return Repository.articlesArray
     }
-    //var data:ArrayList<ArticleData>  = Repository.getArticlesForHomeView()
-//    var articlesList:MutableLiveData<Array<ArticleData>> = MutableLiveData()
-//    val _articlesList :LiveData<Array<ArticleData>>
+    //var data:ArrayList<ArticleSmaller>  = Repository.getArticlesForHomeView()
+//    var articlesList:MutableLiveData<Array<ArticleSmaller>> = MutableLiveData()
+//    val _articlesList :LiveData<Array<ArticleSmaller>>
 //        get(){
 //            return articlesList.value
 //        }
