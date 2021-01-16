@@ -51,14 +51,34 @@
         android:layout_height="wrap_content"
         android:theme="@style/article_title"
         android:text="@{currentArticle.title}" />
-    <Button
-        android:id="@+id/commentsButton"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comments"
-        android:layout_marginStart="@dimen/article_margin"
-       
-        />
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/commentsButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="@string/comments"
+            android:layout_marginLeft="1dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:src="@drawable/comments"
+            android:layout_marginStart="@dimen/article_margin"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments"
+            android:layout_toRightOf="@id/commentsButton"
+            android:theme="@style/article_photo_description"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

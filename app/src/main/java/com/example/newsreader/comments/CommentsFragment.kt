@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,7 @@ class CommentsFragment : Fragment() {
     private lateinit var commentsViewModel: CommentsViewModel
     private lateinit var commentsRecyclerView: RecyclerView
     private lateinit var commentsList :ArrayList<Comment>
-    private lateinit var buttonAddComment:Button
+    private lateinit var buttonAddComment:ImageButton
     private val args:CommentsFragmentArgs by navArgs()
 
 

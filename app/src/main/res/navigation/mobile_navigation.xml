@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.newsreader.ui.dashboard.DashboardFragment"
+        android:name="com.example.newsreader.ui.dashboard.LoginFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
