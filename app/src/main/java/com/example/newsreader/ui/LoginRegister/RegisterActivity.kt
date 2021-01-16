@@ -55,6 +55,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (credentialsOK != "") {
                     allDataIsGood = false
+                    Toast.makeText(this,credentialsOK,Toast.LENGTH_SHORT).show()
                     return@OnClickListener
 
                 }

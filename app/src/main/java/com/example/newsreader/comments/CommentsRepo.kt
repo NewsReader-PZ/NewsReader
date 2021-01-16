@@ -13,6 +13,57 @@ import kotlin.collections.ArrayList
 
 object CommentsRepo {
 
+    private var CRUserID =""
+    private var CRUserNick = ""
+    fun setUserID(u :String)
+    {
+        CRUserID =u
+    }
+    /*
+    fun downloadUIDAndNick()
+    {
+        downloadUserUiD()
+        //downloadUserNick()
+    }
+
+
+    private fun downloadUserUiD()
+    {
+        this.CRUserID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        Log.println(Log.INFO, "download user ID", "user ID: *$CRUserID*")
+    }
+
+     */
+    fun downloadUserNick()
+    {
+        if( CRUserID =="")
+        {
+            return
+        }
+
+        try {
+
+            CRUserNick = getCommentAuthorName(CRUserID)
+            if(CRUserNick=="")
+            {
+                Log.println(Log.INFO, "download user nick", "user nick: *$CRUserNick*")
+            }
+        }
+        catch (e :Throwable)
+        {
+            Log.println(Log.ERROR, "download user nick", "faile to download user nick")
+        }
+        /*
+        db.collection("Users").document(CRUserID).get().addOnCompleteListener{task ->
+            if(task.isSuccessful)
+            {
+             val doc = task!!.result
+                CRUserNick = doc!!.get("nick") as String
+            }
+        }
+        */
+    }
+
     private val db = FirebaseFirestore.getInstance()
     private val commentsArrayMLD = MutableLiveData<ArrayList<Comment>>()
     private val commentAdded = MutableLiveData<Boolean>()
@@ -75,10 +126,10 @@ object CommentsRepo {
     }
 
     @Throws(Exception::class)
-    private fun getCommentAuthorName(userID :String): String {
+    fun getCommentAuthorName(userID :String): String {
 
 
-        var nick=""
+        var nickOfUser=""
         if(userID==null) {
             throw Exception()
         }
@@ -88,8 +139,8 @@ object CommentsRepo {
             db.collection("Users").document(userID).get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
-                            nick = document["nick"] as String
-                            Log.println(Log.INFO, "comments repo", "Fetched user name: $nick")
+                            nickOfUser = document["nick"] as String
+                            Log.println(Log.INFO, "comments repo", "Fetched user name: $nickOfUser")
                             return@addOnSuccessListener
                         } else {
                             Log.println(Log.ERROR, "comments repo", "Failed to fetch user name")
@@ -100,14 +151,14 @@ object CommentsRepo {
                         throw Exception()
                     }
 
-            Log.println(Log.INFO, "getNickFunction", "before return - nick: $nick")
-            return nick
+            Log.println(Log.INFO, "getNickFunction", "before return - nick: $nickOfUser")
+            return nickOfUser
         }
         catch(e:Exception)
         {
             Log.println(Log.ERROR, "getNickFunction", "error while searching for nick")
         }
-        return "unknown"
+        return "unknown nick"
     }
 
     fun leaveComment(commentText :String, articleUid: String)  {
@@ -132,16 +183,13 @@ object CommentsRepo {
             commentAdded.value = false
         }
     }
-    //TODO implement methods to get user uid and user nick in the Repository
     private fun getUserUid() :String
     {
-        //TODO implement method
-        return "EVsGdlm6DeUZ3lT6bqllrGbbszT2"
+        return CRUserID;
     }
     private fun getUserNick() :String
     {
-        //TODO implement method
-        return "legolas"
+        return CRUserNick;
     }
 
 }

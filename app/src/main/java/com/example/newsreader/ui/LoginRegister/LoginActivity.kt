@@ -2,13 +2,18 @@ package com.example.newsreader.ui.LoginRegister
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.archmvvm2.CommentsRepo
 import com.example.newsreader.R
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : AppCompatActivity() {
@@ -51,12 +56,18 @@ class LoginActivity : AppCompatActivity() {
                             this
                         ) { task ->
                             if (task.isSuccessful) {
-                                //val user = mAuth.currentUser
-                                //userID = user.providerId
-                                Toast.makeText(
-                                    this, "signed in",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                //CommentsRepo.downloadUIDAndNick()
+                                var uid :String?= mAuth.uid
+                                if(uid==null)
+                                {uid = "nick unknown"}
+                                //Toast.makeText(this, "logging: user id: *$uid*", Toast.LENGTH_SHORT).show()
+
+                                CommentsRepo.setUserID(uid)
+                                Log.println(Log.INFO,"logging to firebase","User ID: $uid")
+
+                                CommentsRepo.downloadUserNick()
+
+                                Toast.makeText(this, "signed in", Toast.LENGTH_SHORT).show()
                                 super.onBackPressed()
 
                             } else {

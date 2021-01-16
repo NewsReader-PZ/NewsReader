@@ -15,7 +15,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.archmvvm2.CommentsRepo
 import com.example.newsreader.R
+import com.example.newsreader.Repository
 import com.example.newsreader.ui.CommentData.Comment
 import kotlin.collections.ArrayList
 
@@ -71,6 +73,7 @@ class CommentsFragment : Fragment() {
             action.articleId = args.articleId
             findNavController().navigate(action)
         }
+        CommentsRepo.getCommentsOfArticle(Repository.CurrentArticle.id)
     }
 
     private fun prepareRecyclerView()
@@ -95,6 +98,12 @@ class CommentsFragment : Fragment() {
                 commentsRecyclerView.adapter!!.notifyDataSetChanged()
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (commentsRecyclerView.adapter as CommentsAdapter).setItems(commentsList)
+        commentsRecyclerView.adapter!!.notifyDataSetChanged()
     }
 
     /*
