@@ -2,6 +2,7 @@ package com.example.newsreader.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.archmvvm2.CommentsRepo
 import com.example.newsreader.R
 import com.example.newsreader.ui.LoginRegister.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -90,10 +92,30 @@ class LoginFragment : Fragment() {
                                     if (task.isSuccessful) {
                                         //val user = mAuth.currentUser
                                         //userID = user.providerId
-                                        Toast.makeText(
-                                                context, "signed in",
+
+                                        var uid :String?= mAuth.uid
+                                        if(uid!=null)
+                                        {
+                                            CommentsRepo.setUserID(uid)
+                                            //CommentsRepo.downloadUserNick()
+                                            CommentsRepo.setCurrentUserNick()
+                                            Log.println(Log.INFO,"logging to firebase","User ID: $uid")
+
+                                        }
+                                        else
+                                        {uid = ""
+                                            Toast.makeText(
+                                                context, "failed to retrieve user nick",
                                                 Toast.LENGTH_SHORT
+                                            ).show()
+                                            Log.println(Log.INFO,"logging to firebase","Signed in - user unknown")
+                                        }
+
+                                        Toast.makeText(
+                                            context, "signed in",
+                                            Toast.LENGTH_SHORT
                                         ).show()
+
                                         //super.onBackPressed()
 
                                     } else {

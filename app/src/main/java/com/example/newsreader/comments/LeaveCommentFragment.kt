@@ -72,6 +72,11 @@ class LeaveCommentFragment : Fragment() {
             }
 
         })
+        commentsViewModel.currentUserNick.observe(viewLifecycleOwner, object :Observer<String> {
+            override fun onChanged(t: String?) {
+                commentsViewModel.setCurrentNick(t!!)
+            }
+        })
 
 
     }

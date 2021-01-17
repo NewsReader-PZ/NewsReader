@@ -17,7 +17,11 @@ class CommentsViewModel() : ViewModel() {
     private var articleUID = ""
     val commentsArray :LiveData<ArrayList<Comment>> get() { return CommentsRepo.getCommentsArrayMLD() }
     val commentAdded :LiveData<Boolean> get() { return  CommentsRepo.getCommentAdded()}
-
+    val currentUserNick :LiveData<String> get() { return  CommentsRepo.getCurrentUserNick()}
+    fun setCurrentNick(nick :String)
+    {
+        CommentsRepo.setUserNick(nick)
+    }
 
     fun setArticleUID(artUID:String)
     {

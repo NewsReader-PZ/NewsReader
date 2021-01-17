@@ -64,8 +64,8 @@ class LoginActivity : AppCompatActivity() {
 
                                 CommentsRepo.setUserID(uid)
                                 Log.println(Log.INFO,"logging to firebase","User ID: $uid")
-
-                                CommentsRepo.downloadUserNick()
+                                CommentsRepo.setCurrentUserNick()
+                                //CommentsRepo.downloadUserNick()
 
                                 Toast.makeText(this, "signed in", Toast.LENGTH_SHORT).show()
                                 super.onBackPressed()
