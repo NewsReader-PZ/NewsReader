@@ -15,12 +15,14 @@ import kotlin.math.sign
 object CommentsRepo {
 
     private var signedIn = false
-    fun userHasSignedUp() {
-        signedIn = true}
-    fun isUserSignedIn():Boolean { return signedIn }
-
     private var CRUserID =""
     private var CRUserNick = ""
+
+
+    fun isUserSignedIn():Boolean { return signedIn }
+    fun userHasSignedUp() {
+        signedIn = true}
+
     fun setUserID(u :String)
     {
         CRUserID =u
@@ -31,6 +33,7 @@ object CommentsRepo {
     {
         return  userNickMLD
     }
+    /*
     fun setCurrentUserNick()
     {
         db.collection("Users").document(CRUserID).get()
@@ -50,6 +53,28 @@ object CommentsRepo {
                 throw Exception()
             }
     }
+    */
+
+    fun setCurrentUserNick2()
+    {
+        db.collection("Users").document(CRUserID).get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val nickOfUser = document["nick"] as String
+                        Log.println(Log.INFO, "comments repo", "Fetched user name: $nickOfUser")
+                        CRUserNick = nickOfUser
+                    } else {
+                        Log.println(Log.ERROR, "comments repo", "Failed to fetch user name")
+                        throw Exception()
+                    }
+                }
+                .addOnFailureListener { exception ->
+
+                    Log.println(Log.ERROR, "comments repo", "Error while retriving nick, before throwing exception")
+                    throw Exception()
+                }
+    }
+
     /*
     private fun getCurrentUserName(crUserID: String): String {
 

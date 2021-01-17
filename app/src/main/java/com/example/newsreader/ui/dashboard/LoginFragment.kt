@@ -18,6 +18,8 @@ import com.example.archmvvm2.CommentsRepo
 import com.example.newsreader.R
 import com.example.newsreader.ui.LoginRegister.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -94,12 +96,17 @@ class LoginFragment : Fragment() {
                                         //userID = user.providerId
 
                                         var uid :String?= mAuth.uid
-                                        if(uid!=null)
+                                        if(uid!=null && uid!="")
                                         {
-                                            dashboardViewModel.userHasSignedIm(uid)
+                                            //dashboardViewModel.userHasSignedIm(uid)
 
+                                                //replace unction above with corutine function
+                                            //attempt to replace observer with corutine
+                                                GlobalScope.launch {
+                                                    dashboardViewModel.suspUserHasSignedIn(uid!!)
+                                                }
                                             Log.println(Log.INFO,"logging to firebase","User ID: $uid")
-
+                                            //end of changes
                                         }
                                         else
                                         {uid = ""
