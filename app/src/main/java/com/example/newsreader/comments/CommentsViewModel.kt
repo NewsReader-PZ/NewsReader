@@ -14,6 +14,21 @@ class CommentsViewModel() : ViewModel() {
     init {
 
     }
+    /*
+    // analogiczna funkcja w dashboardViewModel
+    fun signInTheUser(uid :String)
+    {
+        CommentsRepo.setUserID(uid)
+        CommentsRepo.setCurrentUserNick()
+        CommentsRepo.userHasSignedUp()
+    }
+    */
+
+    fun isUserSignedIn() :Boolean
+    {
+        return  CommentsRepo.isUserSignedIn()
+    }
+
     private var articleUID = ""
     val commentsArray :LiveData<ArrayList<Comment>> get() { return CommentsRepo.getCommentsArrayMLD() }
     val commentAdded :LiveData<Boolean> get() { return  CommentsRepo.getCommentAdded()}

@@ -96,9 +96,8 @@ class LoginFragment : Fragment() {
                                         var uid :String?= mAuth.uid
                                         if(uid!=null)
                                         {
-                                            CommentsRepo.setUserID(uid)
-                                            //CommentsRepo.downloadUserNick()
-                                            CommentsRepo.setCurrentUserNick()
+                                            dashboardViewModel.userHasSignedIm(uid)
+
                                             Log.println(Log.INFO,"logging to firebase","User ID: $uid")
 
                                         }

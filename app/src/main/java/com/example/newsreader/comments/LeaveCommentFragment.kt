@@ -93,12 +93,19 @@ class LeaveCommentFragment : Fragment() {
     }
     private fun leaveComment()
     {
-        val text = textViewComment.text.toString()
-        if(!text.isEmpty()) {
-            commentsViewModel.leaveComment(text, args.articleId)
+        if(commentsViewModel.isUserSignedIn()) {
+            val text = textViewComment.text.toString()
+            if (!text.isEmpty()) {
+                commentsViewModel.leaveComment(text, args.articleId)
+            } else
+                Toast.makeText(this.activity, "Cannot post empty comment.", Toast.LENGTH_SHORT)
+                    .show()
         }
         else
-            Toast.makeText(this.activity,"Cannot post empty comment.",Toast.LENGTH_SHORT).show()
+        {
+            Toast.makeText(this.activity, "Sign in to leave a comment.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 

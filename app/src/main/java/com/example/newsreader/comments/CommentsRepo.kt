@@ -9,10 +9,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 //import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.sign
 
 
 object CommentsRepo {
 
+    private var signedIn = false
+    fun userHasSignedUp() {
+        signedIn = true}
+    fun isUserSignedIn():Boolean { return signedIn }
 
     private var CRUserID =""
     private var CRUserNick = ""
