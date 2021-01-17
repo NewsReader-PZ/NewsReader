@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsreader.R
-import com.example.newsreader.ui.CommentData.Comment
+import com.example.newsreader.ui.commentData.Comment
 
 object DateUtils {
     @JvmStatic

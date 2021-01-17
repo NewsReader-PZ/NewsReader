@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.newsreader.ui.ArticleData.ArticleData
+import com.example.newsreader.ui.articleData.ArticleSmaller
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
@@ -20,13 +20,13 @@ object Repository:LifecycleObserver {
     private const val TAG:String = "Repository"
     private val db = Firebase.firestore
     val storageReference:StorageReference = FirebaseStorage.getInstance().reference
-    private var _articlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
-    val articlesArray:LiveData<ArrayList<ArticleData>>
+    private var _articlesArray:MutableLiveData<ArrayList<ArticleSmaller>> = MutableLiveData<ArrayList<ArticleSmaller>>()
+    val articlesArray:LiveData<ArrayList<ArticleSmaller>>
         get() {
             return _articlesArray
         }
-    private var _chosenArticlesArray:MutableLiveData<ArrayList<ArticleData>> = MutableLiveData<ArrayList<ArticleData>>()
-    val chosenArticlesArray:LiveData<ArrayList<ArticleData>>
+    private var _chosenArticlesArray:MutableLiveData<ArrayList<ArticleSmaller>> = MutableLiveData<ArrayList<ArticleSmaller>>()
+    val chosenArticlesArray:LiveData<ArrayList<ArticleSmaller>>
         get() {
             return _chosenArticlesArray
         }
@@ -37,7 +37,7 @@ object Repository:LifecycleObserver {
     }
     fun setCurrentArticle(articleId:String){
         val currentArticle = "Current article"
-        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        //var articlesArray:ArrayList<ArticleSmaller> = ArrayList()
         Log.i(TAG,"$currentArticle articleId $articleId")
         Log.i(TAG,"$currentArticle FieldPath id ${FieldPath.documentId()}")
         db.collection("Articles")
@@ -48,7 +48,7 @@ object Repository:LifecycleObserver {
 
                     Log.d(TAG, "$currentArticle documentSnapshot data size: ${document.documents.size}")
                     //val dataSize = document.size()
-                    //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
+                    //articlesArray = Array<ArticleSmaller>(dataSize) { it -> ArticleSmaller() }
                     //articlesArray = document.toObjects(MyArticlesArray::class.java)
                       //  }
 //                    val storageReference:StorageReference = FirebaseStorage.getInstance(articleId).reference
@@ -85,25 +85,14 @@ object Repository:LifecycleObserver {
                 Log.d(TAG, "get failed with ", exception)
             }
     }
-//    fun getClickedArticleId(position: Int): String?{
-//        Log.i(TAG, "getClickedArticleId: ${_articlesArray.value?.get(position)?.id}")
-//       return _articlesArray.value?.get(position)?.id
-//    }
-//    fun getArticlesArray():ArrayList<ArticleData>{
-//        return if(_articlesArray.value != null) _articlesArray.value!!
-//        else ArrayList<ArticleData>()
-//    }
     fun setArticlesForHomeView(){
-        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        //var articlesArray:ArrayList<ArticleSmaller> = ArrayList()
         db.collection("Articles")
             .orderBy("publishingDate",Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {  document ->
                     if (document != null) {
                         Log.d(TAG, "DocumentSnapshot data size: ${document.documents.size}")
-                        //val dataSize = document.size()
-                        //articlesArray = Array<ArticleData>(dataSize) { it -> ArticleData() }
-                        //articlesArray = document.toObjects(MyArticlesArray::class.java)
                         var get = 5
                         for (i in 0 until get){
                             val arrayContainsId = _articlesArray.value?.filter { it.id ==  document.documents[i].id}
@@ -112,9 +101,10 @@ object Repository:LifecycleObserver {
                                     continue
                                 }
                             }
-                            val articleData = ArticleData(
+                            val articleData = ArticleSmaller(
                                 document.documents[i].get("title") as String,
                                 document.documents[i].get("author") as String,
+                                document.documents[i].get("category") as String,
                                 document.documents[i].get("subheading") as String,
                                 document.documents[i].id,
                                 storageReference.child("Articles/${document.documents[i].id}/0.jpg")
@@ -137,7 +127,7 @@ object Repository:LifecycleObserver {
         //Log.i(TAG, "Returning array size: ${articlesArray.size}")
     }
     fun setArticlesForChosenSection(category:String, amount: Int){
-        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        //var articlesArray:ArrayList<ArticleSmaller> = ArrayList()
         db.collection("Articles")
                 .whereEqualTo("category",category)
                 .orderBy("publishingDate",Query.Direction.DESCENDING)
@@ -156,10 +146,11 @@ object Repository:LifecycleObserver {
                             if (arrayContainsId != null) {
                                 if(arrayContainsId.isNotEmpty()) continue
                             }
-                            val articleData = ArticleData(
+                            val articleData = ArticleSmaller(
                                     document.documents[i].get("title") as String,
                                     document.documents[i].get("author") as String,
                                     document.documents[i].get("subheading") as String,
+                                    document.documents[i].get("category") as String,
                                     document.documents[i].id,
                                     storageReference.child("Articles/${document.documents[i].id}/0.jpg")
                             )
@@ -179,7 +170,7 @@ object Repository:LifecycleObserver {
         //Log.i(TAG, "Returning chosen articleArray size: ${_chosenArticlesArray.value?.size}")
     }
     private fun setArticlesForChosenSectionForHomeView(category:String, amount: Int){
-        //var articlesArray:ArrayList<ArticleData> = ArrayList()
+        //var articlesArray:ArrayList<ArticleSmaller> = ArrayList()
         db.collection("Articles")
             .whereEqualTo("category",category)
             .orderBy("updateDate",Query.Direction.DESCENDING)
@@ -197,10 +188,11 @@ object Repository:LifecycleObserver {
                         if (arrayContainsId != null) {
                             if(arrayContainsId.isNotEmpty()) continue
                         }
-                        val articleData = ArticleData(
+                        val articleData = ArticleSmaller(
                             document.documents[i].get("title") as String,
                             document.documents[i].get("author") as String,
                             document.documents[i].get("subheading") as String,
+                                document.documents[i].get("category") as String,
                             document.documents[i].id,
                             storageReference.child("Articles/${document.documents[i].id}/0.jpg")
                         )

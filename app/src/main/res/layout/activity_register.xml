@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginRegister.RegisterActivity">
+    tools:context=".ui.loginAndRegister.RegisterActivity">
 
     <TextView
         android:id="@+id/textViewRegActDescription"
@@ -60,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_login_btn"
+        android:textColor="#7F7F7F"
         app:layout_constraintBottom_toBottomOf="@+id/buttonRegActRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -3,7 +3,7 @@ package com.example.komentarze
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.archmvvm2.CommentsRepo
-import com.example.newsreader.ui.CommentData.Comment
+import com.example.newsreader.ui.commentData.Comment
 
 class CommentsViewModel() : ViewModel() {
 
@@ -14,19 +14,38 @@ class CommentsViewModel() : ViewModel() {
     init {
 
     }
+    /*
+    // analogiczna funkcja w dashboardViewModel
+    fun signInTheUser(uid :String)
+    {
+        CommentsRepo.setUserID(uid)
+        CommentsRepo.setCurrentUserNick()
+        CommentsRepo.userHasSignedUp()
+    }
+    */
+
+    fun isUserSignedIn() :Boolean
+    {
+        return  CommentsRepo.isUserSignedIn()
+    }
+
     private var articleUID = ""
     val commentsArray :LiveData<ArrayList<Comment>> get() { return CommentsRepo.getCommentsArrayMLD() }
     val commentAdded :LiveData<Boolean> get() { return  CommentsRepo.getCommentAdded()}
-
+    val currentUserNick :LiveData<String> get() { return  CommentsRepo.getCurrentUserNick()}
+    fun setCurrentNick(nick :String)
+    {
+        CommentsRepo.setUserNick(nick)
+    }
 
     fun setArticleUID(artUID:String)
     {
         articleUID = artUID
         CommentsRepo.getCommentsOfArticle(artUID)
     }
-    fun leaveComment(commentText :String)
+    fun leaveComment(commentText :String, articleId: String)
     {
-        CommentsRepo.leaveComment(commentText)
+        CommentsRepo.leaveComment(commentText, articleId)
     }
 
 

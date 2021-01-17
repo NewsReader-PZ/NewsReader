@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.example.newsreader.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,7 +32,7 @@ class LeaveCommentFragment : Fragment() {
 
     lateinit var commentsViewModel :CommentsViewModel
 
-
+    private val args:LeaveCommentFragmentArgs by navArgs()
     private var param1: String? = null
     private var param2: String? = null
 
@@ -62,7 +63,7 @@ class LeaveCommentFragment : Fragment() {
         //commentsViewModel.commentAdded.observe(this, object :Observer<Boolean>{ // przedtem była taka linijka
         commentsViewModel.commentAdded.observe(viewLifecycleOwner, object :Observer<Boolean>{
             override fun onChanged(t: Boolean?) {
-                if(t ?: false)
+                if(t ?: true)
                 {
                     Toast.makeText(acti,"Comment posted.",Toast.LENGTH_SHORT).show()
                 }
@@ -71,6 +72,14 @@ class LeaveCommentFragment : Fragment() {
             }
 
         })
+        /*
+        //attempt to replace observer with corutine
+        commentsViewModel.currentUserNick.observe(viewLifecycleOwner, object :Observer<String> {
+            override fun onChanged(t: String?) {
+                commentsViewModel.setCurrentNick(t!!)
+            }
+        })
+         */
 
 
     }
@@ -87,12 +96,19 @@ class LeaveCommentFragment : Fragment() {
     }
     private fun leaveComment()
     {
-        val text = textViewComment.text.toString()
-        if(!text.isEmpty()) {
-            commentsViewModel.leaveComment(text)
+        if(commentsViewModel.isUserSignedIn()) {
+            val text = textViewComment.text.toString()
+            if (!text.isEmpty()) {
+                commentsViewModel.leaveComment(text, args.articleId)
+            } else
+                Toast.makeText(this.activity, "Cannot post empty comment.", Toast.LENGTH_SHORT)
+                    .show()
         }
         else
-            Toast.makeText(this.activity,"Cannot post empty comment.",Toast.LENGTH_SHORT).show()
+        {
+            Toast.makeText(this.activity, "Sign in to leave a comment.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 

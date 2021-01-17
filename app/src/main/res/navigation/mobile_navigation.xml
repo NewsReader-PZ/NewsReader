@@ -29,9 +29,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.newsreader.ui.dashboard.DashboardFragment"
+        android:name="com.example.newsreader.ui.loginAndRegister.LoginFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_home"
             app:destination="@id/navigation_home" />
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/article"
-        android:name="com.example.newsreader.ui.article.Article"
+        android:name="com.example.newsreader.ui.article.ArticleFragment"
         android:label="article_fragment"
         tools:layout="@layout/article_fragment" >
         <argument
@@ -71,7 +71,12 @@
             android:defaultValue="1" />
         <action
             android:id="@+id/action_article_to_commentsFragment"
-            app:destination="@id/commentsFragment" />
+            app:destination="@id/commentsFragment">
+            <argument
+                android:name="articleId"
+                app:argType="string"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/chosenSectionFragment"
@@ -95,12 +100,31 @@
         android:id="@+id/commentsFragment"
         android:name="com.example.komentarze.CommentsFragment"
         android:label="CommentsFragment" >
+        <argument
+            android:name="articleId"
+            app:argType="string"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_commentsFragment_to_leaveCommentFragment"
-            app:destination="@id/leaveCommentFragment" />
+            app:destination="@id/leaveCommentFragment" >
+            <argument
+                android:name="articleId"
+                app:argType="string"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/leaveCommentFragment"
         android:name="com.example.komentarze.LeaveCommentFragment"
-        android:label="LeaveCommentFragment" />
+        android:label="LeaveCommentFragment" >
+        <argument
+            android:name="articleId"
+            app:argType="string"
+            android:defaultValue="1" />
+    </fragment>
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.example.newsreader.ui.loginAndRegister.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 </navigation>

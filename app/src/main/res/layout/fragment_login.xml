@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.LoginRegister.LoginActivity">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/editTextLogActPassword"
@@ -42,18 +41,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewLogActDescription" />
 
     <Button
-        android:id="@+id/buttonLogActBack"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_in_back_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonLogActLogin"
-        app:layout_constraintEnd_toStartOf="@+id/buttonLogActLogin"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonLogActLogin" />
-
-    <Button
         android:id="@+id/buttonLogActLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonLogActRegister"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonLogActBack"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLogActPassword" />
 
     <Button
@@ -70,10 +57,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_register_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonLogActLogin"
+        android:textColor="#7F7F7F"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonLogActLogin"
-        app:layout_constraintTop_toTopOf="@+id/buttonLogActLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextLogActPassword"
+        app:layout_constraintVertical_bias="0.497" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

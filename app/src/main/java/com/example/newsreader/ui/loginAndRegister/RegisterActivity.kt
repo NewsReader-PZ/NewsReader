@@ -1,4 +1,4 @@
-package com.example.newsreader.ui.LoginRegister
+package com.example.newsreader.ui.loginAndRegister
 
 import android.os.Bundle
 import android.view.View
@@ -40,8 +40,6 @@ class RegisterActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
 
-
-
         signUpButton.setOnClickListener(
             View.OnClickListener {
                 val email = emailEditText.text.toString()
@@ -55,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (credentialsOK != "") {
                     allDataIsGood = false
+                    Toast.makeText(this,credentialsOK,Toast.LENGTH_SHORT).show()
                     return@OnClickListener
 
                 }

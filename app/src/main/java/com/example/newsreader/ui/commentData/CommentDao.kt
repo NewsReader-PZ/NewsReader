@@ -1,4 +1,4 @@
-package com.example.newsreader.ui.CommentData
+package com.example.newsreader.ui.commentData
 
 import androidx.room.*
 

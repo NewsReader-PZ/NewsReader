@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsReader.NoActionBar">
         <activity android:name="com.example.newsreader.ui.LoginRegister.LoginActivity"></activity>
-        <activity android:name="com.example.newsreader.ui.LoginRegister.RegisterActivity" />
+        <activity android:name="com.example.newsreader.ui.loginAndRegister.RegisterActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -5,15 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CommentsFragment">
-
-
     <TextView
         android:id="@+id/textViewCommFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:theme="@style/article_title"
+
         android:text="@string/comments_titleComms" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_marginStart="@dimen/article_margin"
+            android:src="@drawable/add_comment"
+            android:scaleType="fitCenter"
+            android:id="@+id/button_add_comment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:text="Add comment"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/article_photo_description"
+            android:textSize="22sp"
+            android:layout_toRightOf="@id/button_add_comment"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/article_margin"
+            android:text="Add comment"/>
+
+    </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerViewCommFrag"
