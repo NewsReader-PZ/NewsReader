@@ -7,10 +7,12 @@ import com.example.newsreader.ui.commentData.Comment
 
 class CommentsViewModel() : ViewModel() {
 
+    /*
     constructor(articleId:String) :this()
     {
         CommentsRepo.getCommentsOfArticle(articleId)
     }
+    */
     init {
 
     }
@@ -32,17 +34,17 @@ class CommentsViewModel() : ViewModel() {
     private var articleUID = ""
     val commentsArray :LiveData<ArrayList<Comment>> get() { return CommentsRepo.getCommentsArrayMLD() }
     val commentAdded :LiveData<Boolean> get() { return  CommentsRepo.getCommentAdded()}
-    val currentUserNick :LiveData<String> get() { return  CommentsRepo.getCurrentUserNick()}
-    fun setCurrentNick(nick :String)
-    {
-        CommentsRepo.setUserNick(nick)
-    }
+    //val currentUserNick :LiveData<String> get() { return  CommentsRepo.getCurrentUserNick()}
+    //fun setCurrentNick(nick :String)
+    //{
+    //    CommentsRepo.setUserNick(nick)
+    //}
 
-    fun setArticleUID(artUID:String)
-    {
-        articleUID = artUID
-        CommentsRepo.getCommentsOfArticle(artUID)
-    }
+    //fun setArticleUID(artUID:String)
+    //{
+    //    articleUID = artUID
+    //    CommentsRepo.getCommentsOfArticle(artUID)
+    //}
     fun leaveComment(commentText :String, articleId: String)
     {
         CommentsRepo.leaveComment(commentText, articleId)

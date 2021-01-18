@@ -26,12 +26,15 @@ object CommentsRepo {
     {
         CRUserID =u
     }
-
+    /*
     private val userNickMLD = MutableLiveData<String>()
+
     fun getCurrentUserNick() :LiveData<String>
     {
         return  userNickMLD
     }
+
+     */
     /*
     fun setCurrentUserNick()
     {
@@ -211,8 +214,10 @@ object CommentsRepo {
 
     }
 
+    /*
     fun setUserNick(nick: String) {
         CRUserNick = nick
     }
+    */
 
 }
